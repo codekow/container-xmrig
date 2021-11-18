@@ -12,7 +12,7 @@ DEFAULT_EXTRA_ARGS=''
 
 start_miner(){
 xmrig \
-  --donate-level ${DONATE_LEVEL:-DEFAULT_DONATE_LEVEL} \
+  --donate-level ${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL} \
   -o ${POOL_URL:-$DEFAULT_POOL_URL} \
   -u ${POOL_USER:-$DEFAULT_POOL_USER} \
   -p ${POOL_PASS:-$DEFAULT_POOL_PASS} \
