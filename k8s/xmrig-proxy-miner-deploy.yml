@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: xmrig-proxy
+    app.kubernetes.io/component: xmrig-proxy
+    app.kubernetes.io/instance: xmrig-proxy
+    app.kubernetes.io/name: xmrig-proxy
+    app.kubernetes.io/part-of: xmrig-proxy
+  name: xmrig-proxy-miner
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: xmrig-proxy-miner
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: xmrig-proxy-miner
+    spec:
+      containers:
+      - image: ghcr.io/codekow/xmrig:latest
+        imagePullPolicy: IfNotPresent
+        name: xmrig-proxy-miner
+        env:
+        - name: POOL_URL
+          value: xmrig-proxy:3333
+        - name: POOL_USER
+          value: $(HOSTNAME)
+        - name: POOL_PASS
+          value: x
+        - name: EXTRA_ARGS
+          value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
+        resources:
+          limits:
+            cpu: '1'
+            memory: 2400Mi
+          requests:
+            cpu: '1'
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /home/miner
+          name: empty
+      restartPolicy: Always
+      volumes:
+      - emptyDir: {}
+        name: empty

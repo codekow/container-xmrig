@@ -1,0 +1,222 @@
+---
+kind: Template
+apiVersion: template.openshift.io/v1
+labels:
+  template: xmrig-proxy
+  app.kubernetes.io/part-of: xmrig
+metadata:
+  name: xmrig-proxy
+  annotations:
+    openshift.io/display-name: XMRig-proxy
+    description: Run xmrig w/xmrig-proxy
+    iconClass: icon-openshift
+    tags: xmrig,xmrig-proxy
+    openshift.io/documentation-url: "https://github.com/codekow/container-xmrig"
+    openshift.io/support-url: "https://github.com/codekow/container-xmrig/issues"
+    template.openshift.io/bindable: "false"
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  required: true
+  value: xmrig-proxy
+- name: DEPLOY_MEM_LIMIT
+  displayName: Deploy Memory Limit
+  value: 2400Mi
+  required: true
+  description: This is the right size for 1 CPU and thread
+- name: DEPLOY_CPU_LIMIT
+  displayName: Deploy CPU Limit
+  value: '1'
+  required: true
+  description: This is using 1 CPU and 1 thread
+- name: DOCKER_IMAGE_BASE
+  description: "Base docker URI for building"
+  value: "ghcr.io/codekow/xmrig"
+- name: DOCKER_IMAGE_TAG
+  description: "Base docker URI for building"
+  value: "latest"
+- name: POOL_URL
+  value: pool.supportxmr.com:3333
+- name: POOL_USER
+  value: 42Fx7FEPRdUjDYckqrW6fqF4zwDD332uLTvDTpRv2KHnHsV2LWv1NVA4SjJwnfik8BFyD8Cx3yJxETVEFrKCehoMPxdum8g
+- name: POOL_PASS
+  value: openshift-proxy
+objects:
+- kind: ImageStream
+  apiVersion: image.openshift.io/v1
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME}
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - from:
+          kind: DockerImage
+          name: ${DOCKER_IMAGE_BASE}-proxy:${DOCKER_IMAGE_TAG}
+        name: ${DOCKER_IMAGE_TAG}
+        importPolicy:
+          scheduled: true
+      - from:
+          kind: ImageStreamTag
+          name: ${DOCKER_IMAGE_TAG}
+        name: "stable"
+- kind: ImageStream
+  apiVersion: image.openshift.io/v1
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME}-miner
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+      - from:
+          kind: DockerImage
+          name: ${DOCKER_IMAGE_BASE}:${DOCKER_IMAGE_TAG}
+        name: ${DOCKER_IMAGE_TAG}
+        importPolicy:
+          scheduled: true
+      - from:
+          kind: ImageStreamTag
+          name: ${DOCKER_IMAGE_TAG}
+        name: "stable"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME}
+  spec:
+    selector:
+      app: ${APPLICATION_NAME}
+      deploymentconfig: ${APPLICATION_NAME}
+    ports:
+      - protocol: TCP
+        port: 3333
+        targetPort: 3333
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+      app.kubernetes.io/component: ${APPLICATION_NAME}
+      app.kubernetes.io/instance: ${APPLICATION_NAME}
+      app.kubernetes.io/name: ${APPLICATION_NAME}
+      app.kubernetes.io/part-of: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME}
+  spec:
+    replicas: 1
+    selector:
+      app: ${APPLICATION_NAME}
+      deploymentconfig: ${APPLICATION_NAME}
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: ${APPLICATION_NAME}
+          deploymentconfig: ${APPLICATION_NAME}
+      spec:
+        containers:
+        - image: ${APPLICATION_NAME}:latest
+          imagePullPolicy: IfNotPresent
+          name: ${APPLICATION_NAME}
+          env:
+          - name: POOL_URL
+            value: "${POOL_URL}"
+          - name: POOL_USER
+            value: "${POOL_USER}" 
+          - name: POOL_PASS
+            value: "${POOL_PASS}"
+          - name: EXTRA_ARGS
+            value: '--verbose --no-color'
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+          ports:
+          - containerPort: 3333
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /home/miner
+            name: empty
+        restartPolicy: Always
+        volumes:
+        - emptyDir: {}
+          name: empty
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${APPLICATION_NAME}
+        from:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}:latest
+      type: ImageChange
+    - type: ConfigChange
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: ${APPLICATION_NAME}
+      app.kubernetes.io/component: ${APPLICATION_NAME}
+      app.kubernetes.io/instance: ${APPLICATION_NAME}
+      app.kubernetes.io/name: ${APPLICATION_NAME}
+      app.kubernetes.io/part-of: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME}-miner
+  spec:
+    replicas: 10
+    selector:
+      app: ${APPLICATION_NAME}
+      deploymentconfig: ${APPLICATION_NAME}-miner
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: ${APPLICATION_NAME}
+          deploymentconfig: ${APPLICATION_NAME}-miner
+      spec:
+        containers:
+        - image: ${APPLICATION_NAME}-miner:latest
+          imagePullPolicy: IfNotPresent
+          name: ${APPLICATION_NAME}-miner
+          env:
+          - name: POOL_URL
+            value: ${APPLICATION_NAME}:3333
+          - name: POOL_USER
+            value: $(HOSTNAME)
+          - name: POOL_PASS
+            value: x
+          - name: EXTRA_ARGS
+            value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
+          resources:
+            limits:
+              cpu: "${DEPLOY_CPU_LIMIT}"
+              memory: "${DEPLOY_MEM_LIMIT}"
+            requests:
+              cpu: "${DEPLOY_CPU_LIMIT}"
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /home/miner
+            name: empty
+        restartPolicy: Always
+        volumes:
+        - emptyDir: {}
+          name: empty
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${APPLICATION_NAME}-miner
+        from:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}-miner:latest
+      type: ImageChange
+    - type: ConfigChange
