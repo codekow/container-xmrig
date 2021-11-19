@@ -1,0 +1,61 @@
+# builder
+FROM alpine:latest AS build
+
+ARG XMRIG_VERSION='v6.15.3'
+
+RUN apk add git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
+
+WORKDIR /root
+RUN git clone https://github.com/xmrig/xmrig
+WORKDIR /root/xmrig
+RUN git checkout ${XMRIG_VERSION}
+
+#COPY donate.patch /root/xmrig/
+#RUN git apply donate.patch
+
+COPY maxdonate.patch /root/xmrig/
+RUN git apply maxdonate.patch
+
+RUN mkdir build && \
+    cd scripts && \
+    ./build_deps.sh && \
+    cd ../build && \
+    cmake .. \
+      -DXMRIG_DEPS=scripts/deps \
+      -DBUILD_STATIC=ON \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DOPENSSL_USE_STATIC_LIBS=TRUE && \
+    make -j$(nproc)
+
+# miner
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y libhwloc15
+
+### Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
+LABEL name="xmrig" \
+      maintainer="koree@redhat.com" \
+      vendor="xmrig" \
+      summary="Container for xmrig" \
+      description="A container used to mine XMR using xmrig" \
+      org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
+
+# setup: xmrig
+ENV XMRIG_VERSION="6.15.3"
+
+# setup: entrypoint and other scripts over
+COPY bin /usr/local/bin
+COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
+
+USER 1001
+
+WORKDIR /home/miner
+VOLUME /home/miner
+
+EXPOSE 8080
+
+ENV DONATE_LEVEL='1' \
+    POOL_URL='pool.supportxmr.com:3333' \
+    POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
+    POOL_PASS='container'
+
+ENTRYPOINT ["entrypoint.sh"]
