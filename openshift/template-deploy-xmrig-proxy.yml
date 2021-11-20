@@ -41,6 +41,8 @@ parameters:
   value: 42Fx7FEPRdUjDYckqrW6fqF4zwDD332uLTvDTpRv2KHnHsV2LWv1NVA4SjJwnfik8BFyD8Cx3yJxETVEFrKCehoMPxdum8g
 - name: POOL_PASS
   value: openshift-proxy
+- name: DONATE_LEVEL
+  value: '1'
 objects:
 - kind: ImageStream
   apiVersion: image.openshift.io/v1
@@ -124,6 +126,8 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APPLICATION_NAME}
           env:
+          - name: DONATE_LEVEL
+            value: "${DONATE_LEVEL}"
           - name: POOL_URL
             value: "${POOL_URL}"
           - name: POOL_USER
@@ -186,6 +190,8 @@ objects:
           imagePullPolicy: IfNotPresent
           name: ${APPLICATION_NAME}-miner
           env:
+          - name: DONATE_LEVEL
+            value: "${DONATE_LEVEL}"
           - name: POOL_URL
             value: ${APPLICATION_NAME}:3333
           - name: POOL_USER
@@ -193,7 +199,7 @@ objects:
           - name: POOL_PASS
             value: x
           - name: EXTRA_ARGS
-            value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
+            value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
           resources:
             limits:
               cpu: "${DEPLOY_CPU_LIMIT}"
