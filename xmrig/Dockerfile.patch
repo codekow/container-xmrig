@@ -3,18 +3,18 @@ FROM alpine:latest AS build
 
 ARG XMRIG_VERSION='v6.15.3'
 
-RUN apk add git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
+RUN apk add curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
 
 WORKDIR /root
 RUN git clone https://github.com/xmrig/xmrig
 WORKDIR /root/xmrig
 RUN git checkout ${XMRIG_VERSION}
 
-#COPY donate.patch /root/xmrig/
-#RUN git apply donate.patch
+COPY patch.maxdonate /root/xmrig/
+RUN git apply patch.maxdonate
 
-COPY maxdonate.patch /root/xmrig/
-RUN git apply maxdonate.patch
+COPY patch.donate /root/xmrig/
+RUN git apply patch.donate
 
 RUN mkdir build && \
     cd scripts && \
@@ -28,7 +28,7 @@ RUN mkdir build && \
     make -j$(nproc)
 
 # miner
-FROM alpine:latest
+FROM  alpine:latest
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
@@ -36,12 +36,20 @@ LABEL \
       org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
+RUN apk add --no-cache curl nodejs
+
 # setup: xmrig
 ENV XMRIG_VERSION="6.15.3"
+COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
+
+# setup: meta-miner
+ARG MM_URL="https://raw.githubusercontent.com/MoneroOcean/meta-miner/master/mm.js"
+
+RUN curl -sL "${MM_URL}" -o /usr/local/bin/mm.js && \
+    chmod +x /usr/local/bin/mm.js
 
 # setup: entrypoint and other scripts over
 COPY bin /usr/local/bin
-COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
 
 USER 1001
 

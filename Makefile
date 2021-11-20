@@ -31,7 +31,7 @@ main-build:
 
 xmrig-build:
 	cd xmrig; \
-	$(CONTAINER_CMD) build -t $(REGISTRY)/$(USER)/xmrig:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH)
+	$(CONTAINER_CMD) build -t $(REGISTRY)/$(USER)/xmrig:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH).patch
 
 xmrig-proxy-build:
 	cd xmrig-proxy; \

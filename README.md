@@ -16,11 +16,12 @@ podman build -t xmrig-proxy .
 
 ```
 
-## Usage podman / podman
+## Usage docker / podman
 
-Root User (allow optimization) - single run
+single miner (allow optimization w/root)
 
 ```
+# xmrig (standalone)
 sudo podman run \
   --rm -it \
   --privileged \
@@ -31,9 +32,21 @@ sudo podman run \
   -e POOL_PASS='container' \
   xmrig
 
+# meta-miner
+sudo podman run \
+  --rm -it \
+  --privileged \
+  -u root \
+  -v $(pwd) \
+  -e DONATE_LEVEL='1' \
+  -e POOL_URL='gulf.moneroocean.stream:10016' \
+  -e POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
+  -e POOL_PASS='container' \
+  xmrig start_meta_miner
+
 ```
 
-XMRig-proxy
+xmrig-proxy w/miner (root)
 ```
 # start proxy
 podman run \

@@ -6,7 +6,7 @@ LABEL \
       org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
 ENV XMRIG_VERSION="6.15.3"
@@ -19,6 +19,12 @@ RUN curl -sL "${XMRIG_URL}" -o bin.tgz && \
     echo "XMRIG_HASH: PASSED" && \
     tar --strip-components=1 -C /usr/local/bin -zxf bin.tgz && \
     rm bin.tgz
+
+# setup: meta-miner
+ARG MM_URL="https://raw.githubusercontent.com/MoneroOcean/meta-miner/master/mm.js"
+
+RUN curl -sL "${MM_URL}" -o /usr/local/bin/mm.js && \
+    chmod +x /usr/local/bin/mm.js
 
 # setup: entrypoint and other scripts over 
 COPY bin /usr/local/bin
