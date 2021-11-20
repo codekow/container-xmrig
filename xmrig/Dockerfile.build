@@ -31,12 +31,10 @@ RUN mkdir build && \
 FROM ubuntu:latest
 RUN apt-get update && apt-get install -y libhwloc15
 
-### Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
-LABEL name="xmrig" \
-      maintainer="koree@redhat.com" \
-      vendor="xmrig" \
-      summary="Container for xmrig" \
-      description="A container used to mine XMR using xmrig" \
+### https://github.com/opencontainers/image-spec/blob/main/annotations.md
+LABEL \
+      org.opencontainers.image.description.vendor="xmrig" \
+      org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
 # setup: xmrig

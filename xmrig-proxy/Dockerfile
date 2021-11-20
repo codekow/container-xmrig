@@ -1,11 +1,9 @@
 FROM  alpine:3
 
-### Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
-LABEL name="xmrig-proxy" \
-      maintainer="koree@redhat.com" \
-      vendor="xmrig" \
-      summary="Container for xmrig-proxy" \
-      description="A container used to proxy mining XMR using xmrig" \
+### https://github.com/opencontainers/image-spec/blob/main/annotations.md
+LABEL \
+      org.opencontainers.image.description.vendor="xmrig" \
+      org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
 ENV \
