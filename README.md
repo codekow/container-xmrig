@@ -37,7 +37,7 @@ sudo podman run \
   --rm -it \
   --privileged \
   -u root \
-  -v $(pwd) \
+  -v $(pwd):/home/miner:z \
   -e DONATE_LEVEL='1' \
   -e POOL_URL='gulf.moneroocean.stream:10016' \
   -e POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
