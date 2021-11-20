@@ -28,8 +28,7 @@ RUN mkdir build && \
     make -j$(nproc)
 
 # miner
-FROM ubuntu:latest
-RUN apt-get update && apt-get install -y libhwloc15
+FROM alpine:latest
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
