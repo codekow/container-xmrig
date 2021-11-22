@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: xmrig-scale-down
+spec:
+  schedule: "0 12 * * 1-5"
+  successfulJobsHistoryLimit: 3 # Remove after successful completion
+  failedJobsHistoryLimit: 1 # Retain failed so that we see it
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: xmrig-ds-scale
+          containers:
+          - name: xmrig-scale-down-job
+            image: image-registry.openshift-image-registry.svc:5000/openshift/cli
+            env:
+              - name: DAEMON_SET_NAME
+                value: xmrig-hugepages-2m
+              - name: CPU_LIMIT
+                value: '5'
+            command:
+              - bash
+              - -c
+              - |
+                # set cpu limit
+                oc set resources ds "${DAEMON_SET_NAME}" --limits="cpu=${CPU_LIMIT}"

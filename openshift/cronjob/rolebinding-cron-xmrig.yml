@@ -1,0 +1,22 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: xmrig-ds-scale
+rules:
+- apiGroups: ["apps"]
+  resources: ["daemonsets"]
+  verbs: ["patch", "get"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: xmrig-ds-scale
+subjects:
+- kind: ServiceAccount
+  name: xmrig-ds-scale
+roleRef:
+  kind: Role
+  name: xmrig-ds-scale
+  apiGroup: rbac.authorization.k8s.io
