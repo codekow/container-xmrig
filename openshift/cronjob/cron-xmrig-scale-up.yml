@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: xmrig-scale-up
+spec:
+  schedule: "45 23 * * 1-5"
+  successfulJobsHistoryLimit: 3 # Remove after successful completion
+  failedJobsHistoryLimit: 1 # Retain failed so that we see it
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: xmrig-ds-scale
+          containers:
+          - name: xmrig-scale-up-job
+            image: image-registry.openshift-image-registry.svc:5000/openshift/cli
+            env:
+              - name: DAEMON_SET_NAME
+                value: xmrig-hugepages-2m
+            command:
+              - bash
+              - -c
+              - |
+                # remove cpu limit
+                oc patch ds "${DAEMON_SET_NAME}" --type json -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/resources/limits/cpu"}]'
