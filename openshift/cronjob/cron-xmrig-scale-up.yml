@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: xmrig-scale-up
+  name: xmrig-ds-scale-up
 spec:
   schedule: "45 23 * * 1-5"
   successfulJobsHistoryLimit: 3 # Remove after successful completion
@@ -14,7 +14,7 @@ spec:
           restartPolicy: OnFailure
           serviceAccountName: xmrig-ds-scale
           containers:
-          - name: xmrig-scale-up-job
+          - name: xmrig-ds-scale-up-job
             image: image-registry.openshift-image-registry.svc:5000/openshift/cli
             env:
               - name: DAEMON_SET_NAME

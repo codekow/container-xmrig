@@ -9,13 +9,13 @@ on:  # yamllint disable-line rule:truthy
   schedule:
     - cron: '5 4 * * 6'
   push:
-    branches: [main]
+    branches: ["main"]
     # Publish semver tags as releases.
-    tags: ['v*.*.*']
-    paths: ['xmrig/**']
+    tags: ["v*.*.*"]
+    paths: ["xmrig/**"]
   pull_request:
-    branches: [main]
-    paths: ['xmrig/**']
+    branches: ["main"]
+    paths: ["xmrig/**"]
 
 env:
   IMAGE_NAME: xmrig
