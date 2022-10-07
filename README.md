@@ -47,6 +47,7 @@ sudo podman run \
 ```
 
 xmrig-proxy w/miner (root)
+
 ```
 # start proxy
 podman run \

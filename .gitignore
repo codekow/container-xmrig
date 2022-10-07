@@ -2,3 +2,5 @@
 dictionary.dic
 scratch/
 venv/
+.venv/
+Makefile.venv
