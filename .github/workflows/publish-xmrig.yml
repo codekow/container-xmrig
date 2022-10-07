@@ -12,8 +12,10 @@ on:
     branches: [ main ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+    paths: [ 'xmrig/**' ]
   pull_request:
     branches: [ main ]
+    paths: [ 'xmrig/**' ]
 
 env:
   IMAGE_NAME: xmrig
@@ -27,7 +29,6 @@ env:
 
 jobs:
   publish:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
