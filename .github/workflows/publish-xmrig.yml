@@ -7,7 +7,7 @@ name: publish-xmrig
 
 on:
   schedule:
-    - cron: '16 1 * * *'
+    - cron: '5 4 * * 6'
   push:
     branches: [ main ]
     # Publish semver tags as releases.
@@ -17,7 +17,7 @@ on:
 
 env:
   IMAGE_NAME: xmrig
-  IMAGE_VERSION: 6.15.3
+  IMAGE_VERSION: 6.18.0
   GHCR_REGISTRY: ghcr.io
   GHCR_USER: ${{ github.repository_owner }}
   GHCR_IMAGE: ${GHCR_REGISTRY}/${GHCR_USER}/${IMAGE_NAME}
