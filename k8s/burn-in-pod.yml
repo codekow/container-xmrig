@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: burn-in
+  name: burn-in
+  # namespace: default
+spec:
+  containers:
+  - image: ghcr.io/codekow/xmrig:latest
+    name: burn-in
+    resources:
+      limits:
+        memory: 2400Mi
+      requests:
+        memory: 2400Mi
+    env:
+      - name: EXTRA_ARGS
+        value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100'
+    securityContext:
+      privileged: false
+  restartPolicy: Always
+  hostNetwork: true

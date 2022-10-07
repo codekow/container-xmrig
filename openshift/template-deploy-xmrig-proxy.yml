@@ -131,7 +131,7 @@ objects:
           - name: POOL_URL
             value: "${POOL_URL}"
           - name: POOL_USER
-            value: "${POOL_USER}" 
+            value: "${POOL_USER}"
           - name: POOL_PASS
             value: "${POOL_PASS}"
           - name: EXTRA_ARGS

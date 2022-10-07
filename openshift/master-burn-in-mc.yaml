@@ -1,0 +1,18 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: master-burn-in
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+        - contents:
+            source: >-
+              data:text/plain;charset=utf-8;base64,YXBpVmVyc2lvbjogdjEKa2luZDogUG9kCm1ldGFkYXRhOgogIGxhYmVsczoKICAgIGFwcDogYnVybi1pbgogIG5hbWU6IGJ1cm4taW4KICBuYW1lc3BhY2U6IGRlZmF1bHQKc3BlYzoKICBjb250YWluZXJzOgogIC0gaW1hZ2U6IGdoY3IuaW8vY29kZWtvdy94bXJpZzo2LjE4LjAKICAgIG5hbWU6IGJ1cm4taW4KICAgIHJlc291cmNlczoKICAgICAgbGltaXRzOgogICAgICAgIG1lbW9yeTogMjQwME1pCiAgICAgIHJlcXVlc3RzOgogICAgICAgIG1lbW9yeTogMjQwME1pCiAgICBlbnY6CiAgICAgIC0gbmFtZTogRVhUUkFfQVJHUwogICAgICAgIHZhbHVlOiAnLS1hc209bm9uZSAtLW5vLWh1Z2UtcGFnZXMgLS1jcHUtbm8teWllbGQgLS1tYXgtY3B1LXVzYWdlPTEwMCcKICAgIHNlY3VyaXR5Q29udGV4dDoKICAgICAgcHJpdmlsZWdlZDogZmFsc2UKICByZXN0YXJ0UG9saWN5OiBBbHdheXMKICBob3N0TmV0d29yazogdHJ1ZQo=
+          mode: 420
+          overwrite: true
+          path: /etc/kubernetes/manifests/burn-in-pod.yaml
