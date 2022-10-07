@@ -11,6 +11,7 @@ ENV \
     POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
     POOL_PASS='proxy'
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache curl
 
 # setup: xmrig-proxy

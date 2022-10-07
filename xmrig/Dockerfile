@@ -6,6 +6,7 @@ LABEL \
       org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig

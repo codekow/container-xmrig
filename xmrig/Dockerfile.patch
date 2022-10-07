@@ -1,9 +1,10 @@
 # builder
-FROM alpine:latest AS build
+FROM alpine:3 AS build
 
 ARG XMRIG_VERSION='v6.18.0'
 
-RUN apk add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
+# hadolint ignore=DL3018
+RUN apk --no-cache add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
 
 WORKDIR /root
 RUN git clone https://github.com/xmrig/xmrig
@@ -16,19 +17,21 @@ RUN git apply patch.maxdonate
 COPY patch.donate /root/xmrig/
 RUN git apply patch.donate
 
-RUN mkdir build && \
-    cd scripts && \
-    ./build_deps.sh && \
-    cd ../build && \
-    cmake .. \
+RUN mkdir build
+
+WORKDIR /root/xmrig/scripts
+RUN ./build_deps.sh
+
+WORKDIR /root/xmrig/build
+RUN cmake .. \
       -DXMRIG_DEPS=scripts/deps \
       -DBUILD_STATIC=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DOPENSSL_USE_STATIC_LIBS=TRUE && \
-    make -j$(nproc)
+    make -j"$(nproc)"
 
 # miner
-FROM  alpine:latest
+FROM  alpine:3
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
@@ -36,6 +39,7 @@ LABEL \
       org.opencontainers.image.description="A container used to mine XMR using xmrig" \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
