@@ -1,4 +1,4 @@
-skind: DaemonSet
+kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: xmrig-hugepages-2m
@@ -49,7 +49,7 @@ spec:
           volumeMounts:
             - name: empty
               mountPath: /home/miner/config
-          image: image-registry.openshift-image-registry.svc:5000/bakesale/xmrig-direct-miner:latest
+          image: image-registry.openshift-image-registry.svc:5000/burn-in/xmrig-direct-miner:latest
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/os: linux
@@ -58,5 +58,4 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
-      maxSurge: 3
   revisionHistoryLimit: 3

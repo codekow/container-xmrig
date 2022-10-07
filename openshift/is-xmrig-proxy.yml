@@ -1,8 +1,8 @@
----
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   labels:
+    app: xmrig
     app.kubernetes.io/part-of: xmrig
   name: xmrig-proxy
 spec:
