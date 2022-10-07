@@ -27,7 +27,7 @@ start_meta_miner(){
 cat /usr/local/bin/config.json > config.json
 
 # copy mm.config (config map)
-[[ -e /config/mm.json ]] && cat /config/config.json > mm.json
+[ -e /config/mm.json ] && cat /config/config.json > mm.json
 
 sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json

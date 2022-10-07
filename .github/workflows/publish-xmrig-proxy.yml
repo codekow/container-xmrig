@@ -5,17 +5,17 @@ name: publish-xmrig-proxy
 # separate terms of service, privacy policy, and support
 # documentation.
 
-on:
+on:  # yamllint disable-line rule:truthy
   schedule:
     - cron: '5 4 * * 6'
   push:
-    branches: [ main ]
+    branches: [main]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
-    paths: [ 'xmrig-proxy/**' ]
+    tags: ['v*.*.*']
+    paths: ['xmrig-proxy/**']
   pull_request:
-    branches: [ main ]
-    paths: [ 'xmrig-proxy/**' ]
+    branches: [main]
+    paths: ['xmrig-proxy/**']
 
 env:
   IMAGE_NAME: xmrig-proxy
@@ -23,8 +23,8 @@ env:
   GHCR_REGISTRY: ghcr.io
   GHCR_USER: ${{ github.repository_owner }}
   GHCR_IMAGE: ${GHCR_REGISTRY}/${GHCR_USER}/${IMAGE_NAME}
-  #DOCKERHUB_REGISTRY=docker.io
-  #DOCKERHUB_USER: ${{ github.repository_owner }}
+  # DOCKERHUB_REGISTRY=docker.io
+  # DOCKERHUB_USER: ${{ github.repository_owner }}
 
 
 jobs:

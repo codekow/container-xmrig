@@ -30,7 +30,7 @@ jobs:
 
   containerfile-lint:
     runs-on: ubuntu-latest
-    name: hadolint
+    name: containerfile-lint
     steps:
       - uses: actions/checkout@v2
       - name: Run Hadolint

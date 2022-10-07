@@ -5,18 +5,18 @@
 
 version: 2
 updates:
-  - package-ecosystem: "docker" 
-    directory: "/xmrig" 
-    target-branch: "main" 
+  - package-ecosystem: "docker"
+    directory: "/xmrig"
+    target-branch: "main"
     schedule:
       interval: "daily"
-  - package-ecosystem: "docker" 
-    directory: "/xmrig-proxy" 
-    target-branch: "main" 
+  - package-ecosystem: "docker"
+    directory: "/xmrig-proxy"
+    target-branch: "main"
     schedule:
       interval: "daily"
-  - package-ecosystem: "github-actions" 
-    directory: "/" 
+  - package-ecosystem: "github-actions"
+    directory: "/"
     target-branch: "main"
     schedule:
       interval: "daily"
