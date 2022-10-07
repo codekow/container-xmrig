@@ -49,7 +49,8 @@ spec:
           volumeMounts:
             - name: empty
               mountPath: /home/miner/config
-          image: image-registry.openshift-image-registry.svc:5000/burn-in/xmrig-direct-miner:latest
+          # image: image-registry.openshift-image-registry.svc:5000/burn-in/xmrig:latest
+          image: ghcr.io/codekow/xmrig:latest
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/os: linux
