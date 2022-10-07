@@ -1,9 +1,9 @@
 # builder
 FROM alpine:latest AS build
 
-ARG XMRIG_VERSION='v6.15.3'
+ARG XMRIG_VERSION='v6.18.0'
 
-RUN apk add curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
+RUN apk add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
 
 WORKDIR /root
 RUN git clone https://github.com/xmrig/xmrig
@@ -39,7 +39,7 @@ LABEL \
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.15.3"
+ENV XMRIG_VERSION="6.18.0"
 COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
 
 # setup: meta-miner
