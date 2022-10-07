@@ -3,17 +3,11 @@
 ## Build
 
 ```
-make
-```
+# run lint
+make lint
 
-```
-cd xmrig
-podman build -t xmrig .
-cd ..
-
-cd xmrig-proxy
-podman build -t xmrig-proxy .
-
+# run build
+make build
 ```
 
 ## Usage docker / podman
