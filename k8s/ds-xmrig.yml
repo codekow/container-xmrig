@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: empty
-              mountPath: /home/miner/config
+              mountPath: /home/miner
           # image: image-registry.openshift-image-registry.svc:5000/burn-in/xmrig:latest
           image: ghcr.io/codekow/xmrig:latest
       restartPolicy: Always
