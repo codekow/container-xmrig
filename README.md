@@ -1,5 +1,7 @@
 # XMRig Container
 
+The purpose of this repo is to have a way to test limits and burn in on hardware.
+
 ## Build
 
 ```
