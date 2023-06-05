@@ -4,7 +4,7 @@ CONTAINER_CMD=podman
 CONTAINER_BUILD_CONTEXT=.
 CONTAINER_FILE_PATH=Dockerfile
 
-USER=codekow
+RUSER=codekow
 REGISTRY=ghcr.io
 VERSION=latest
 
@@ -31,15 +31,15 @@ main-build:
 
 xmrig-build:
 	cd xmrig; \
-	$(CONTAINER_CMD) build -t $(REGISTRY)/$(USER)/xmrig:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH).patch
+	$(CONTAINER_CMD) build -t $(REGISTRY)/$(RUSER)/xmrig:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH).patch
 
 xmrig-proxy-build:
 	cd xmrig-proxy; \
-	$(CONTAINER_CMD) build -t $(REGISTRY)/$(USER)/xmrig-proxy:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH)
+	$(CONTAINER_CMD) build -t $(REGISTRY)/$(RUSER)/xmrig-proxy:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH)
 
 push:
-	$(CONTAINER_CMD) push $(REGISTRY)/$(USER)/xmrig:$(VERSION)
-	$(CONTAINER_CMD) push $(REGISTRY)/$(USER)/xmrig-proxy:$(VERSION)
+	$(CONTAINER_CMD) push $(REGISTRY)/$(RUSER)/xmrig:$(VERSION)
+	$(CONTAINER_CMD) push $(REGISTRY)/$(RUSER)/xmrig-proxy:$(VERSION)
 
 lint-yaml:
 	 $(VENV)/yamllint -c .yamllint .

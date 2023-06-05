@@ -1,4 +1,4 @@
-FROM  alpine:3
+FROM docker.io/library/alpine:3
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
@@ -15,8 +15,8 @@ ENV \
 RUN apk add --no-cache curl
 
 # setup: xmrig-proxy
-ENV XMRIG_PROXY_VERSION="6.18.0"
-ARG XMRIG_PROXY_HASH="fe83dc89466fbd828a1cd71145021a3908950ac2bb8b3a9af9f6d8bf05352ea3"
+ENV XMRIG_PROXY_VERSION="6.19.2"
+ARG XMRIG_PROXY_HASH="77917f4e1372c0d591ecc2fd17dfb875bd8c2a6f372426a5a578642d2ff82ed9"
 ARG XMRIG_PROXY_URL="https://github.com/xmrig/xmrig-proxy/releases/download/v${XMRIG_PROXY_VERSION}/xmrig-proxy-${XMRIG_PROXY_VERSION}-linux-static-x64.tar.gz"
 
 RUN curl -sL "${XMRIG_PROXY_URL}" -o bin.tgz && \

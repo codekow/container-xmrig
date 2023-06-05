@@ -1,5 +1,5 @@
 diff --git a/src/donate.h b/src/donate.h
-index 5db3badc..7fd7d27d 100644
+index 206b1b8f..2e2bc7e6 100644
 --- a/src/donate.h
 +++ b/src/donate.h
 @@ -38,7 +38,8 @@
@@ -11,4 +11,5 @@ index 5db3badc..7fd7d27d 100644
 +constexpr const int kMinimumDonateLevel = 0;
  
  
- #endif /* XMRIG_DONATE_H */
+ #endif // XMRIG_DONATE_H
+ 

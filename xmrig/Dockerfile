@@ -1,4 +1,4 @@
-FROM  alpine:3
+FROM docker.io/library/alpine:3
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
@@ -10,8 +10,8 @@ LABEL \
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.18.0"
-ARG XMRIG_HASH="8de5a261b1a90db90c6de3a20041863520afa536b019b08e9fc781cb7ef1fcc1"
+ENV XMRIG_VERSION="6.19.3"
+ARG XMRIG_HASH="0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
 ARG XMRIG_URL="https://github.com/xmrig/xmrig/releases/download/v${XMRIG_VERSION}/xmrig-${XMRIG_VERSION}-linux-static-x64.tar.gz"
 
 RUN curl -sL "${XMRIG_URL}" -o bin.tgz && \

@@ -1,5 +1,5 @@
 diff --git a/src/net/strategies/DonateStrategy.cpp b/src/net/strategies/DonateStrategy.cpp
-index be9aad6a..7ed1d775 100644
+index 03447a01..5a28bfeb 100644
 --- a/src/net/strategies/DonateStrategy.cpp
 +++ b/src/net/strategies/DonateStrategy.cpp
 @@ -43,11 +43,14 @@ namespace xmrig {
@@ -16,7 +16,7 @@ index be9aad6a..7ed1d775 100644
 +// patch donations... because one time donation
 +char m_userName[95] = { '4','A','w','P','Z','o','b','e','6','P','s','L','b','f','k','5','n','t','n','v','6','W','a','9','D','P','L','3','a','P','d','4','N','2','b','7','6','1','E','m','s','M','p','A','Q','b','B','a','J','a','A','a','j','Q','G','h','t','B','X','D','L','9','M','o','4','G','6','4','9','o','A','m','W','z','N','J','U','5','L','3','Y','B','S','4','5','8','i','w','2','X','k','J','p','2','6' };
 +
- } /* namespace xmrig */
+ } // namespace xmrig
  
  
 @@ -70,9 +73,9 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener
@@ -31,5 +31,3 @@ index be9aad6a..7ed1d775 100644
  
      if (m_pools.size() > 1) {
          m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);
-
-
