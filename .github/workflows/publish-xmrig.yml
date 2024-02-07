@@ -12,14 +12,18 @@ on:  # yamllint disable-line rule:truthy
     branches: ["main"]
     # Publish semver tags as releases.
     tags: ["v*.*.*"]
-    paths: ["xmrig/**"]
+    paths:
+    - xmrig/**
+    - .github/workflows/**
   pull_request:
     branches: ["main"]
-    paths: ["xmrig/**"]
+    paths:
+    - xmrig/**
+    - .github/workflows/**
 
 env:
   IMAGE_NAME: xmrig
-  IMAGE_VERSION: 6.19.3
+  IMAGE_VERSION: 6.21.0
   GHCR_REGISTRY: ghcr.io
   GHCR_USER: ${{ github.repository_owner }}
   GHCR_IMAGE: ${GHCR_REGISTRY}/${GHCR_USER}/${IMAGE_NAME}
