@@ -70,7 +70,7 @@ jobs:
         uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
         with:
           context: ${{ steps.prep.outputs.name }}
-          file: ${{ steps.prep.outputs.name }}/Dockerfile.patch
+          file: ${{ steps.prep.outputs.name }}/Dockerfile.build
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.prep.outputs.tags }}
           labels: org.opencontainers.image.version=${{ steps.prep.outputs.version }}
