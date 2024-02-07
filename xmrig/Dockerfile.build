@@ -25,8 +25,7 @@ RUN ./build_deps.sh
 WORKDIR /root/xmrig/build
 RUN cmake .. \
       -DXMRIG_DEPS=scripts/deps \
-      -DBUILD_STATIC=OFF \
-      -DWITH_OPENCL=ON \
+      -DBUILD_STATIC=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DOPENSSL_USE_STATIC_LIBS=TRUE && \
     make -j"$(nproc)"
