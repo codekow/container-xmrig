@@ -1,7 +1,7 @@
 # builder
 FROM docker.io/library/alpine:3 AS build
 
-ARG XMRIG_VERSION='v6.19.3'
+ARG XMRIG_VERSION='v6.21.0'
 
 # hadolint ignore=DL3018
 RUN apk --no-cache add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
@@ -25,7 +25,8 @@ RUN ./build_deps.sh
 WORKDIR /root/xmrig/build
 RUN cmake .. \
       -DXMRIG_DEPS=scripts/deps \
-      -DBUILD_STATIC=ON \
+      -DBUILD_STATIC=OFF \
+      -DWITH_OPENCL=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DOPENSSL_USE_STATIC_LIBS=TRUE && \
     make -j"$(nproc)"
@@ -43,7 +44,7 @@ LABEL \
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.19.3"
+ENV XMRIG_VERSION="6.21.0"
 COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
 
 # setup: meta-miner

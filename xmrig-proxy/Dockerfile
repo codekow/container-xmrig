@@ -15,8 +15,8 @@ ENV \
 RUN apk add --no-cache curl
 
 # setup: xmrig-proxy
-ENV XMRIG_PROXY_VERSION="6.19.2"
-ARG XMRIG_PROXY_HASH="77917f4e1372c0d591ecc2fd17dfb875bd8c2a6f372426a5a578642d2ff82ed9"
+ENV XMRIG_PROXY_VERSION="6.21.0"
+ARG XMRIG_PROXY_HASH="ffd1d5f166d13a772f566392054edcfc3b1fa9d0a7cf6cd52bc0f57f9b93c8dc"
 ARG XMRIG_PROXY_URL="https://github.com/xmrig/xmrig-proxy/releases/download/v${XMRIG_PROXY_VERSION}/xmrig-proxy-${XMRIG_PROXY_VERSION}-linux-static-x64.tar.gz"
 
 RUN curl -sL "${XMRIG_PROXY_URL}" -o bin.tgz && \
