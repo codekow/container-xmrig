@@ -21,6 +21,7 @@ single miner (allow optimization w/root)
 sudo podman run \
   --rm -it \
   --privileged \
+  -v /lib/modules:/lib/modules:ro \
   -u root \
   -e DONATE_LEVEL='1' \
   -e POOL_URL='pool.supportxmr.com:3333' \
@@ -32,6 +33,7 @@ sudo podman run \
 sudo podman run \
   --rm -it \
   --privileged \
+  -v /lib/modules:/lib/modules:ro \
   -u root \
   -v $(pwd):/home/miner:z \
   -e DONATE_LEVEL='1' \
@@ -48,6 +50,7 @@ xmrig-proxy w/miner (root)
 # start proxy
 podman run \
   --rm -it \
+  --name xmrig-proxy \
   -p 3333:3333 \
   -e POOL_URL='pool.supportxmr.com:5555' \
   -e POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
@@ -60,8 +63,7 @@ sudo podman run \
   --privileged \
   -u root \
   -e DONATE_LEVEL='1' \
-  -e POOL_URL='10.88.0.1:3333' \
+  -e POOL_URL='xmrig-proxy:3333' \
   -e POOL_USER='minion' \
   ghcr.io/codekow/xmrig
-
 ```
