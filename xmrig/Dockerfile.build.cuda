@@ -48,10 +48,7 @@ RUN ./build_deps.sh
 
 WORKDIR /root/xmrig/build
 RUN cmake .. \
-      -DXMRIG_DEPS=scripts/deps \
-      -DBUILD_STATIC=ON \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DOPENSSL_USE_STATIC_LIBS=TRUE && \
+      -DXMRIG_DEPS=scripts/deps && \
     make -j"$(nproc)"
 
 # miner
@@ -65,8 +62,14 @@ LABEL \
 
 # setup: xmrig
 ENV XMRIG_VERSION="6.21.1"
+
+RUN apt update && \
+    apt -y install libnvidia-compute-535 libnvrtc11.2 && \
+    apt -y install nvidia-opencl-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
-COPY --from=build-cuda-plugin /root/xmrig-cuda/build/libxmrig-cuda.so /usr/lib64/
+COPY --from=build-cuda-plugin /root/xmrig-cuda/build/libxmrig-cuda.so /usr/local/bin/
 
 # setup: entrypoint and other scripts over
 COPY bin /usr/local/bin
