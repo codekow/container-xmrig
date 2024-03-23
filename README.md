@@ -73,8 +73,6 @@ If you are trying to:
 
 Then the following is for you.
 
-NOTE: mounting `/lib/modules` read-only inside the container allows compatibility with more systems, but is usually not required.
-
 ```
 sudo podman run \
   -it --rm \
@@ -83,6 +81,8 @@ sudo podman run \
   -v /lib/modules:/lib/modules:ro \
   ghcr.io/codekow/xmrig
 ```
+
+NOTE: mounting `/lib/modules` read-only inside the container allows compatibility with more systems, but is usually not required.
 
 ## Development
 
