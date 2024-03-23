@@ -35,11 +35,6 @@ USER 1001
 WORKDIR /home/miner
 VOLUME /home/miner
 
-EXPOSE 8080
-
-ENV DONATE_LEVEL='1' \
-    POOL_URL='gulf.moneroocean.stream:10128' \
-    POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
-    POOL_PASS='space-heater'
+EXPOSE 3333 8080
 
 ENTRYPOINT ["entrypoint.sh"]

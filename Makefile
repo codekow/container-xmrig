@@ -14,7 +14,7 @@ SHELL=/bin/bash
 .PHONY: build
 
 
-build: lint pre-build xmrig-build xmrig-proxy-build post-build
+build: lint pre-build xmrig-build xmrig-build-gpu xmrig-proxy-build post-build
 
 
 lint: venv lint-yaml lint-spellcheck
@@ -33,12 +33,17 @@ xmrig-build:
 	cd xmrig; \
 	$(CONTAINER_CMD) build -t $(REGISTRY)/$(RUSER)/xmrig:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH).build
 
+xmrig-build-gpu:
+	cd xmrig; \
+	$(CONTAINER_CMD) build -t $(REGISTRY)/$(RUSER)/xmrig:$(VERSION)-gpu $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH).build.gpu
+
 xmrig-proxy-build:
 	cd xmrig-proxy; \
 	$(CONTAINER_CMD) build -t $(REGISTRY)/$(RUSER)/xmrig-proxy:$(VERSION) $(CONTAINER_BUILD_CONTEXT) -f $(CONTAINER_FILE_PATH)
 
 push:
 	$(CONTAINER_CMD) push $(REGISTRY)/$(RUSER)/xmrig:$(VERSION)
+	$(CONTAINER_CMD) push $(REGISTRY)/$(RUSER)/xmrig:$(VERSION)-gpu
 	$(CONTAINER_CMD) push $(REGISTRY)/$(RUSER)/xmrig-proxy:$(VERSION)
 
 lint-yaml:
