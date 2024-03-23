@@ -1,9 +1,9 @@
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:
-  name: xmrig-hugepages-2m
+  name: xmrig
   labels:
-    app: xmrig-hugepages-2m
+    app: xmrig
     app.kubernetes.io/component: xmrig
     app.kubernetes.io/instance: xmrig
     app.kubernetes.io/name: xmrig
@@ -11,24 +11,17 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: xmrig-hugepages-2m
+      app: xmrig
   template:
     metadata:
       labels:
-        app: xmrig-hugepages-2m
+        app: xmrig
     spec:
       volumes:
         - name: empty
           emptyDir: {}
       containers:
-        - resources:
-            limits:
-              # cpu: '5'
-              hugepages-2Mi: 2400Mi
-              memory: 64Mi
-            requests:
-              hugepages-2Mi: 2400Mi
-          name: xmrig
+        - name: xmrig
           env:
             - name: DONATE_LEVEL
               value: '0'
@@ -37,9 +30,9 @@ spec:
             - name: POOL_USER
               value: 4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26
             - name: POOL_PASS
-              value: openshift-direct-hp-2m
+              value: openshift-direct
             - name: EXTRA_ARGS
-              value: '--asm=none --cpu-no-yield --max-cpu-usage=100 --no-color'
+              value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-color'
           securityContext:
             privileged: false
           ports:
@@ -51,10 +44,15 @@ spec:
               mountPath: /home/miner
           # image: image-registry.openshift-image-registry.svc:5000/burn-in/xmrig:latest
           image: ghcr.io/codekow/xmrig:latest
+          resources:
+            limits:
+          #     # cpu: '5'
+          #     memory: 2400Mi
+          #   requests:
+          #     memory: 2400Mi
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/os: linux
-        node-role.kubernetes.io/worker-hp-2m: ''
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:

@@ -2,13 +2,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: burn-in
-  name: burn-in
-  # namespace: default
+    app: xmrig
+  name: xmrig
 spec:
   containers:
   - image: ghcr.io/codekow/xmrig:latest
-    name: burn-in
+    name: container
     resources:
       limits:
         memory: 2400Mi
@@ -19,5 +18,5 @@ spec:
         value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100'
     securityContext:
       privileged: false
-  restartPolicy: Always
-  hostNetwork: true
+  restartPolicy: Never
+

@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      group: apps
+      kind: DaemonSet
+      name: xmrig
+    patch: |-
+      - op: remove
+        path: /metadata/labels
+      - op: replace
+        path: /metadata/name
+        value: burn-in-remove
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: burn-in
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: burn-in
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: burn-in
