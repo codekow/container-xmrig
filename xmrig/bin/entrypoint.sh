@@ -10,8 +10,22 @@ DEFAULT_POOL_PASS='space-waster'
 #DEFAULT_EXTRA_ARGS='--tls --cpu-no-yield'
 DEFAULT_EXTRA_ARGS=''
 
+# copy default config
+[ -e config.json ] || \
+  cat /usr/local/bin/config.json > config.json
+
 start_miner(){
+
+# enable cuda
+[ -e /usr/local/bin/libxmrig-cuda.so ] && \
+  sed -i '/"cuda":/{n;s/"enabled":.*/"enabled": true,/}' config.json
+
+# enable opencl
+[ -d /etc/OpenCL/ ] && \
+  sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
+
 xmrig \
+  --config=config.json \
   --donate-level ${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL} \
   -o ${POOL_URL:-$DEFAULT_POOL_URL} \
   -u ${POOL_USER:-$DEFAULT_POOL_USER} \
@@ -22,9 +36,6 @@ xmrig \
 }
 
 start_meta_miner(){
-
-# copy default config
-cat /usr/local/bin/config.json > config.json
 
 # copy mm.config (config map)
 [ -e /config/mm.json ] && cat /config/mm.json > mm.json
