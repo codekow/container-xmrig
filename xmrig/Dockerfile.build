@@ -8,9 +8,8 @@ RUN apk --no-cache add bash curl git make cmake libstdc++ gcc g++ automake libto
 
 WORKDIR /root
 RUN git clone --depth 1 --branch v${XMRIG_VERSION} https://github.com/xmrig/xmrig
-WORKDIR /root/xmrig
-RUN git checkout ${XMRIG_VERSION}
 
+WORKDIR /root/xmrig
 COPY patch.maxdonate /root/xmrig/
 RUN git apply patch.maxdonate
 
