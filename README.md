@@ -66,7 +66,12 @@ podman run \
 
 Running processes as `root` comes with risks and rewards (like most things).
 
-If you are trying to improve hash rates with [Model Specific Register](https://xmrig.com/docs/miner/randomx-optimization-guide/msr) (MSR), like [taking risks](https://xkcd.com/1252) or just simply have a history of making [bad choices](https://en.wikipedia.org/wiki/Hot_Pockets) then the following is for you.
+If you are trying to:
+- Improve hash rates (aka: performance) modifying [Model Specific Register](https://xmrig.com/docs/miner/randomx-optimization-guide/msr) (MSR)
+- Like [taking risks](https://xkcd.com/1252)
+- Have a history of making [bad choices](https://en.wikipedia.org/wiki/Hot_Pockets)
+
+Then the following is for you.
 
 NOTE: mounting `/lib/modules` read-only inside the container allows the container to be compatible with more systems, but this is usually not required.
 
