@@ -73,7 +73,7 @@ If you are trying to:
 
 Then the following is for you.
 
-NOTE: mounting `/lib/modules` read-only inside the container allows the container to be compatible with more systems, but this is usually not required.
+NOTE: mounting `/lib/modules` read-only inside the container allows compatibility with more systems, but is usually not required.
 
 ```
 sudo podman run \
