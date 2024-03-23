@@ -10,7 +10,7 @@ LABEL \
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.21.0"
+ENV XMRIG_VERSION="6.21.1"
 ARG XMRIG_HASH="c5dc12dbb9bb51ea8acf93d6349d5bc7fe5ee11b68d6371c1bbb098e21d0f685"
 ARG XMRIG_URL="https://github.com/xmrig/xmrig/releases/download/v${XMRIG_VERSION}/xmrig-${XMRIG_VERSION}-linux-static-x64.tar.gz"
 

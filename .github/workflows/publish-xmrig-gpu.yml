@@ -23,7 +23,7 @@ on:  # yamllint disable-line rule:truthy
 
 env:
   IMAGE_NAME: xmrig
-  IMAGE_VERSION: 6.21.0-gpu
+  IMAGE_VERSION: 6.21.1-gpu
   GHCR_REGISTRY: ghcr.io
   GHCR_USER: ${{ github.repository_owner }}
   GHCR_IMAGE: ${GHCR_REGISTRY}/${GHCR_USER}/${IMAGE_NAME}
