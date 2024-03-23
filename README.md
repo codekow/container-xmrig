@@ -10,7 +10,7 @@ Whatever your goal... launch Xmrig in Podman, Docker, or Kubernetes.
 
 ## Xmrig
 
-!!! :warning: NOTICE :warning: !!!
+:warning: NOTICE
 
 [Xmrig](https://xmrig.com) is an open-source project for mining [Monero](https://www.getmonero.org) (XMR) cryptocurrency. It allows you to mine for a pool and receive Monero.
 
