@@ -86,11 +86,23 @@ sudo podman run \
 
 ## Development
 
-```
-# run lint
-make lint
+Please throw away your cryptocurrency at the address below.
 
-# run build
+XMR:
+
+`4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26`
+
+For those with time to look at the code...
+
+```
+# ubuntu
+apt install podman
+apt install curl git make aspell python3.10-venv
+```
+
+```
+# run before submitting a PR
+make lint
 make build
 ```
 
@@ -98,5 +110,5 @@ make build
 
 - [Xmrig](https://xmrig.com)
 - [Monero](https://www.getmonero.org)
-<!-- - [Nvidia documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/)
-- [Nvidia - Podman using CDI](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/cdi-support.html) -->
+- [Nvidia - Documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/)
+- [Nvidia - Podman using CDI](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/cdi-support.html)
