@@ -10,7 +10,7 @@ Whatever your goal... launch Xmrig in Podman, Docker, or Kubernetes.
 
 ## Xmrig
 
-:warning: NOTICE
+:warning: NOTICE :warning:
 
 [Xmrig](https://xmrig.com) is an open-source project for mining [Monero](https://www.getmonero.org) (XMR) cryptocurrency. It allows you to mine for a pool and receive Monero.
 
@@ -40,7 +40,7 @@ Examples below will use `podman` but should work the same with `docker`
 
 ### Environment Variables
 
-For those of you who ~~hope to get rich~~ [want to lose money](https://whattomine.com/coins/101-xmr-cryptonight?hr=2.0&p=1350.0&fee=1.0&cost=0.18&cost_currency=USD&hcost=0.0&span_br=&span_d=24&commit=Calculate) mining, use the following example to configure your container(s).
+For those of you who ~~hope to get rich~~ [want to lose money](https://whattomine.com/coins/101-xmr-cryptonight?hr=2.0&p=80&fee=1.0&cost=0.18&cost_currency=USD&hcost=0.0&span_br=&span_d=24&commit=Calculate) mining, use the following example to configure your container(s).
 
 NOTE: This container does not run as `root` by default
 
