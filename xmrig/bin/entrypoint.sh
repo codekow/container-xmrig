@@ -33,7 +33,7 @@ sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
 
 mm.js \
-  -p=gulf.moneroocean.stream:10001 \
+  -p=gulf.moneroocean.stream:443 \
   -m="xmrig --config=config.json"
 
 }
