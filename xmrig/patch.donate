@@ -7,10 +7,10 @@ index 03447a01..5a28bfeb 100644
  static inline uint64_t random(uint64_t base, double min, double max) { return static_cast<uint64_t>(base * randomf(min, max)); }
  
 -static const char *kDonateHost = "donate.v2.xmrig.com";
-+static const char *kDonateHost = "pool.supportxmr.com";
++static const char *kDonateHost = "gulf.moneroocean.stream";
  #ifdef XMRIG_FEATURE_TLS
 -static const char *kDonateHostTls = "donate.ssl.xmrig.com";
-+static const char *kDonateHostTls = "pool.supportxmr.com";
++static const char *kDonateHostTls = "gulf.moneroocean.stream";
  #endif
  
 +// patch donations... because one time donation
