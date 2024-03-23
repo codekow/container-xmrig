@@ -40,6 +40,6 @@ EXPOSE 8080
 ENV DONATE_LEVEL='1' \
     POOL_URL='pool.supportxmr.com:443' \
     POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26' \
-    POOL_PASS='container'
+    POOL_PASS='room-heater'
 
 ENTRYPOINT ["entrypoint.sh"]
