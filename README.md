@@ -18,7 +18,7 @@ Running the container(s) without parameters ~~helps contribute $$~~ [sends metri
 
 ## Getting Started
 
-## Usage Docker / Podman
+### Usage Docker / Podman
 
 ```
 docker run -it --rm ghcr.io/codekow/xmrig
