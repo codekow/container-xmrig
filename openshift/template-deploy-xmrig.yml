@@ -35,7 +35,7 @@ parameters:
   description: "Base docker URI for building"
   value: "latest"
 - name: POOL_URL
-  value: pool.supportxmr.com:3333
+  value: gulf.moneroocean.stream:443
 - name: POOL_USER
   value: 42Fx7FEPRdUjDYckqrW6fqF4zwDD332uLTvDTpRv2KHnHsV2LWv1NVA4SjJwnfik8BFyD8Cx3yJxETVEFrKCehoMPxdum8g
 - name: POOL_PASS

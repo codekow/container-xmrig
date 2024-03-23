@@ -4,9 +4,9 @@ set -e
 HOME=/home/miner
 
 DEFAULT_DONATE_LEVEL='1'
-DEFAULT_POOL_URL='gulf.moneroocean.stream:10016'
+DEFAULT_POOL_URL='gulf.moneroocean.stream:443'
 DEFAULT_POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26'
-DEFAULT_POOL_PASS='container'
+DEFAULT_POOL_PASS='space-waster'
 #DEFAULT_EXTRA_ARGS='--cpu-no-yield'
 DEFAULT_EXTRA_ARGS=''
 

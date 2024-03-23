@@ -3,7 +3,7 @@ set -e
 
 HOME=/home/miner
 
-DEFAULT_POOL_URL='pool.supportxmr.com:3333'
+DEFAULT_POOL_URL='gulf.moneroocean.stream:443'
 DEFAULT_POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26'
 DEFAULT_POOL_PASS='proxy'
 DEFAULT_MODE='nicehash'
