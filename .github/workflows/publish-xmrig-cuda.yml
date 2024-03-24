@@ -51,9 +51,9 @@ jobs:
           MAJOR=${VERSION%%.*}
           GHCR_IMAGE=${{ env.GHCR_IMAGE }}
           #TAGS="${DOCKERHUB_IMAGE}:${MAJOR},${DOCKERHUB_IMAGE}:${MINOR}"
-          #TAGS="${TAGS},${DOCKERHUB_IMAGE}:${VERSION},${DOCKERHUB_IMAGE}:latest"
+          #TAGS="${TAGS},${DOCKERHUB_IMAGE}:${VERSION}"
           TAGS="${TAGS},${GHCR_IMAGE}:${MAJOR},${GHCR_IMAGE}:${MINOR}"
-          TAGS="${TAGS},${GHCR_IMAGE}:${VERSION},${GHCR_IMAGE}:latest"
+          TAGS="${TAGS},${GHCR_IMAGE}:${VERSION}"
           echo ::set-output name=name::${{ env.IMAGE_NAME }}
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=version::${VERSION}
