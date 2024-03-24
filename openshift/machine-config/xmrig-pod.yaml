@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: burn-in
+  name: burn-in
+  namespace: default
+spec:
+  containers:
+  - image: ghcr.io/codekow/xmrig:latest
+    name: burn-in
+    resources:
+      limits:
+        memory: 2400Mi
+      requests:
+        memory: 2400Mi
+    env:
+      - name: POOL_URL
+        value: proxy.burn-in.svc.cluster.local:3333
+      - name: EXTRA_ARGS
+        value: '--cpu-priority=0'
+    securityContext:
+      privileged: true
+  restartPolicy: Always
+  hostNetwork: true

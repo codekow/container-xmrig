@@ -15,16 +15,16 @@ patches:
         path: /metadata/labels
       - op: replace
         path: /metadata/name
-        value: burn-in-hugepages-2m-remove
+        value: xmrig-proxy
       - op: replace
         path: /spec/selector/matchLabels/app
-        value: burn-in-hugepages-2m
+        value: xmrig-proxy
       - op: replace
         path: /spec/template/metadata/labels/app
-        value: burn-in-hugepages-2m
+        value: xmrig-proxy
       - op: replace
         path: /spec/template/spec/containers/0/name
-        value: burn-in-hugepages-2m
+        value: xmrig-proxy
       - op: replace
         path: /spec/template/spec/containers/0/env/3
         value:
@@ -40,4 +40,5 @@ patches:
             cpu: 500m
             memory: 128Mi
           requests:
-            hugepages-2Mi: 2400Mi
+            cpu: 500m
+            memory: 128Mi
