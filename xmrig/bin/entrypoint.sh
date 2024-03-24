@@ -1,6 +1,14 @@
 #!/bin/sh
 set -e
 
+create_access_token() {
+  if [ -x "$(command -v uuidgen)" ]; then
+    uuidgen
+  else
+    cat /proc/sys/kernel/random/uuid
+  fi
+}
+
 HOME=/home/miner
 
 DEFAULT_DONATE_LEVEL='1'
@@ -8,7 +16,18 @@ DEFAULT_POOL_URL='gulf.moneroocean.stream:10128'
 DEFAULT_POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26'
 DEFAULT_POOL_PASS='space-heater'
 #DEFAULT_EXTRA_ARGS='--tls --cpu-no-yield'
+DEFAULT_ACCESS_TOKEN=$(create_access_token)
 DEFAULT_EXTRA_ARGS=''
+
+# print access token
+[ -z "${ACCESS_TOKEN}" ] && \
+  echo "
+    ================================================
+    API TOKEN: ${DEFAULT_ACCESS_TOKEN}
+
+    This will change when the container restarts!
+    ================================================
+  "
 
 # copy default config
 [ -e config.json ] || \
@@ -30,6 +49,10 @@ xmrig \
   -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
   -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
   -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" \
+  --http-enabled \
+  --http-port=8080 \
+  --http-host=0.0.0.0 \
+  --http-access-token="${ACCESS_TOKEN:-$DEFAULT_ACCESS_TOKEN}" \
   --nicehash \
   --keepalive \
   ${EXTRA_ARGS:-$DEFAULT_EXTRA_ARGS}
