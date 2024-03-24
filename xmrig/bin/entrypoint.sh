@@ -57,10 +57,9 @@ init_miner_benchmark(){
   pid=$!
 
   (sleep "${TIMEOUT}"; kill $pid) &
-  sleep_pid=$!
   
   wait $pid
-  sleep 3
+  sleep 2
 }
 
 start_miner(){
