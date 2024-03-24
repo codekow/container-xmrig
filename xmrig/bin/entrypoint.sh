@@ -26,10 +26,10 @@ start_miner(){
 
 xmrig \
   --config=config.json \
-  --donate-level ${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL} \
-  -o ${POOL_URL:-$DEFAULT_POOL_URL} \
-  -u ${POOL_USER:-$DEFAULT_POOL_USER} \
-  -p ${POOL_PASS:-$DEFAULT_POOL_PASS} \
+  --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
+  -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
+  -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
+  -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" \
   --nicehash \
   --keepalive \
   ${EXTRA_ARGS:-$DEFAULT_EXTRA_ARGS}
@@ -43,8 +43,8 @@ start_meta_miner(){
 sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
 
-mm.js \
-  -p=gulf.moneroocean.stream:10128 \
+/usr/local/bin/mm.js \
+  -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
   -m="xmrig --config=config.json"
 
 }
