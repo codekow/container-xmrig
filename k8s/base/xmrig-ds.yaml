@@ -30,7 +30,7 @@ spec:
             - name: POOL_PASS
               value: k8s
             - name: EXTRA_ARGS
-              value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-color'
+              value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100'
           securityContext:
             privileged: false
           ports:
