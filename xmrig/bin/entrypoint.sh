@@ -45,7 +45,10 @@ sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' co
 
 /usr/local/bin/mm.js \
   -m="xmrig --config=config.json" \
-  -p="${POOL_URL:-$DEFAULT_POOL_URL}"
+  -u="${POOL_USER:-$DEFAULT_POOL_USER}" \
+  -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
+  --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
+  -w=120
 
 }
 
