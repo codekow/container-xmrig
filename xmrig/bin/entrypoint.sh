@@ -14,8 +14,6 @@ DEFAULT_EXTRA_ARGS=''
 [ -e config.json ] || \
   cat /usr/local/bin/config.json > config.json
 
-start_miner(){
-
 # enable cuda
 [ -e /usr/local/bin/libxmrig-cuda.so ] && \
   sed -i '/"cuda":/{n;s/"enabled":.*/"enabled": true,/}' config.json
@@ -23,6 +21,8 @@ start_miner(){
 # enable opencl
 [ -d /dev/kfd ] && \
   sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
+
+start_miner(){
 
 xmrig \
   --config=config.json \
@@ -44,8 +44,8 @@ sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
 
 /usr/local/bin/mm.js \
-  -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
-  -m="xmrig --config=config.json"
+  -m="xmrig --config=config.json" \
+  -p="${POOL_URL:-$DEFAULT_POOL_URL}"
 
 }
 
