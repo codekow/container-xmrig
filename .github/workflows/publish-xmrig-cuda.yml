@@ -15,11 +15,11 @@ on:  # yamllint disable-line rule:truthy
     paths:
     - xmrig/**
     - .github/workflows/**
-  pull_request:
-    branches: ["main"]
-    paths:
-    - xmrig/**
-    - .github/workflows/**
+  # pull_request:
+  #   branches: ["main"]
+  #   paths:
+  #   - xmrig/**
+  #   - .github/workflows/**
 
 env:
   IMAGE_NAME: xmrig
