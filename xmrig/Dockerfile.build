@@ -7,14 +7,14 @@ ARG XMRIG_VERSION='6.21.1'
 RUN apk --no-cache add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
 
 WORKDIR /root
-RUN git clone --depth 1 --branch v${XMRIG_VERSION} https://github.com/xmrig/xmrig
+RUN git clone --depth 1 --branch v${XMRIG_VERSION}-mo1 https://github.com/MoneroOcean/xmrig
 
 WORKDIR /root/xmrig
 COPY patch.maxdonate /root/xmrig/
 RUN git apply patch.maxdonate
 
-COPY patch.donate /root/xmrig/
-RUN git apply patch.donate
+COPY patch.donate-mo1 /root/xmrig/
+RUN git apply patch.donate-mo1
 
 RUN mkdir build
 

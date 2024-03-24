@@ -1,0 +1,22 @@
+diff --git a/src/net/strategies/DonateStrategy.cpp b/src/net/strategies/DonateStrategy.cpp
+index 5423c51..bca0390 100644
+--- a/src/net/strategies/DonateStrategy.cpp
++++ b/src/net/strategies/DonateStrategy.cpp
+@@ -43,7 +43,7 @@ namespace xmrig {
+ static inline double randomf(double min, double max)                 { return (max - min) * (((static_cast<double>(rand())) / static_cast<double>(RAND_MAX))) + min; }
+ static inline uint64_t random(uint64_t base, double min, double max) { return static_cast<uint64_t>(base * randomf(min, max)); }
+ 
+-static const char *kDonateHost = "xmrig.moneroocean.stream";
++static const char *kDonateHost = "gulf.moneroocean.stream";
+ 
+ } // namespace xmrig
+ 
+@@ -59,7 +59,7 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener
+ #   else
+     constexpr Pool::Mode mode = Pool::MODE_POOL;
+ #   endif
+-    static char donate_user[] = "89TxfrUmqJJcb1V124WsUzA78Xa3UYHt7Bg8RGMhXVeZYPN8cE5CZEk58Y1m23ZMLHN7wYeJ9da5n5MXharEjrm41hSnWHL";
++    static char donate_user[] = "4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26";
+ 
+ #   ifdef XMRIG_FEATURE_TLS
+     m_pools.emplace_back(kDonateHost, 20001, donate_user, nullptr, nullptr, 0, true, true, mode);
