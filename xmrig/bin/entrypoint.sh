@@ -45,6 +45,24 @@ DEFAULT_EXTRA_ARGS=''
 echo "${EXTRA_ARGS}" | grep -q no-cpu && \
   sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 
+init_miner_benchmark(){
+  TIMEOUT=197
+
+  xmrig \
+  --config=config.json \
+  --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
+  -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
+  -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
+  -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" &
+  pid=$!
+
+  (sleep "${TIMEOUT}"; kill $pid) &
+  sleep_pid=$!
+  
+  wait $pid
+  sleep 3
+}
+
 start_miner(){
 
 xmrig \
@@ -64,6 +82,8 @@ xmrig \
 
 start_meta_miner(){
 
+init_miner_benchmark
+
 # copy mm.config (config map)
 [ -e /config/mm.json ] && cat /config/mm.json > mm.json
 
@@ -75,14 +95,15 @@ sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' co
   -u="${POOL_USER:-$DEFAULT_POOL_USER}" \
   -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
   --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
-  --watchdog=120
+  --watchdog=240 \
+  --hashrate_watchdog=80
 
 }
 
 if [ "$1" != "" ]; then
   case "$1" in
-    start_miner) "$@";;
-    start_meta_miner) "$@";;
+    start_miner) "start_miner";;
+    start_meta_miner) "start_meta_miner";;
     *) exec "$@";;
   esac
 else
