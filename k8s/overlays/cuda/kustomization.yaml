@@ -14,19 +14,24 @@ patches:
         path: /metadata/labels
       - op: replace
         path: /metadata/name
-        value: burn-in-gpu-remove
+        value: burn-in-cuda-remove
       - op: replace
         path: /spec/selector/matchLabels/app
-        value: burn-in-gpu
+        value: burn-in-cuda
       - op: replace
         path: /spec/template/metadata/labels/app
-        value: burn-in-gpu
+        value: burn-in-cuda
       - op: replace
         path: /spec/template/spec/containers/0/name
-        value: burn-in-gpu
+        value: burn-in-cuda
       - op: replace
         path: /spec/template/spec/containers/0/image
         value: ghcr.io/codekow/xmrig:6.21.1-cuda
+      - op: replace
+        path: /spec/template/spec/containers/0/env/3
+        value:
+          name: POOL_PASS
+          value: k8s-gpu
       - op: replace
         path: /spec/template/spec/containers/0/env/4
         value:
