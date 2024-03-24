@@ -2,6 +2,7 @@
 #!/bin/sh -e
 
 MSR_FILE=/sys/module/msr/parameters/allow_writes
+which wrmsr || exit 1
 
 if test -e "$MSR_FILE"; then
 	echo on > $MSR_FILE
