@@ -11,11 +11,11 @@ RUN apt install -y git wget curl build-essential cmake automake libtool autoconf
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 
 
-ARG CUDA_PLUGIN_VERSION="6.21.0"
+ARG CUDA_PLUGIN_VERSION="6.21.1"
 
 WORKDIR /root
-RUN curl -sL https://github.com/MoneroOcean/xmrig-cuda/archive/refs/tags/v${CUDA_PLUGIN_VERSION}-mo1.tar.gz | tar zxf - && \
-    mv xmrig-cuda-${CUDA_PLUGIN_VERSION}-mo1 xmrig-cuda
+RUN curl -sL https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v${CUDA_PLUGIN_VERSION}.tar.gz | tar zxf - && \
+    mv xmrig-cuda-${CUDA_PLUGIN_VERSION} xmrig-cuda
 
 WORKDIR /root/xmrig-cuda/build
 RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/lib/x86_64-linux-gnu -DCUDA_ARCH="75;80;86;87" && \
@@ -23,7 +23,7 @@ RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKI
 
 FROM docker.io/ubuntu:22.04 AS build
 
-ARG XMRIG_VERSION="6.21.0"
+ARG XMRIG_VERSION="6.21.1"
 
 # hadolint ignore=DL3018
 RUN apt update && \
@@ -33,14 +33,13 @@ RUN apt update && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 
 WORKDIR /root
-RUN git clone --depth 1 --branch v${XMRIG_VERSION}-mo1 https://github.com/MoneroOcean/xmrig
-
+RUN git clone --depth 1 --branch v${XMRIG_VERSION} https://github.com/xmrig/xmrig
 WORKDIR /root/xmrig
 COPY patch.maxdonate /root/xmrig/
 RUN git apply patch.maxdonate
 
-COPY patch.donate-mo1 /root/xmrig/
-RUN git apply patch.donate-mo1
+COPY patch.donate /root/xmrig/
+RUN git apply patch.donate
 
 RUN mkdir build
 
