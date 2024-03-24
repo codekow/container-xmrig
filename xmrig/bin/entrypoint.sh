@@ -21,7 +21,7 @@ DEFAULT_EXTRA_ARGS=''
 
 # print access token
 [ -z "${ACCESS_TOKEN}" ] && \
-  echo -e "
+  printf "
     =================================================
     API TOKEN: \033[32m${DEFAULT_ACCESS_TOKEN}\033[0m
 
