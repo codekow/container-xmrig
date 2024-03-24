@@ -42,7 +42,7 @@ DEFAULT_EXTRA_ARGS=''
   sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
 
 # disable cpu
-echo "${EXTRA_ARGS}" | grep -q --no-cpu && \
+echo "${EXTRA_ARGS}" | grep -q no-cpu && \
   sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 
 start_miner(){
