@@ -66,6 +66,10 @@ start_meta_miner(){
 sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
 
+# disable cpu
+grep -q --no-cpu < "${EXTRA_ARGS}" && \ 
+  sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
+
 /usr/local/bin/mm.js \
   -m="xmrig --config=config.json" \
   -u="${POOL_USER:-$DEFAULT_POOL_USER}" \

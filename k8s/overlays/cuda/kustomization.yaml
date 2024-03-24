@@ -36,7 +36,7 @@ patches:
         path: /spec/template/spec/containers/0/env/4
         value:
           name: EXTRA_ARGS
-          value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-color --no-cpu'
+          value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-cpu'
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits
         value:
