@@ -26,10 +26,15 @@ patches:
         path: /spec/template/spec/containers/0/name
         value: xmrig-proxy
       - op: replace
-        path: /spec/template/spec/containers/0/env/3
+        path: /spec/template/spec/containers/0/env/2
         value:
           name: POOL_PASS
           value: k8s-proxy
+      - op: replace
+        path: /spec/template/spec/containers/0/env/3
+        value:
+          name: EXTRA_ARGS
+          value: ''
       - op: replace
         path: /spec/template/spec/containers/0/image
         value: ghcr.io/codekow/xmrig-proxy:latest
