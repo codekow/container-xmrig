@@ -4,8 +4,8 @@ metadata:
   name: xmrig-scale-unlimit
 spec:
   schedule: "45 23 * * 1-5"
-  successfulJobsHistoryLimit: 3 # Remove after successful completion
-  failedJobsHistoryLimit: 1 # Retain failed so that we see it
+  successfulJobsHistoryLimit: 3  # Remove after successful completion
+  failedJobsHistoryLimit: 1  # Retain failed so that we see it
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:

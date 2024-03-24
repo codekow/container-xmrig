@@ -26,10 +26,10 @@ patches:
         value: burn-in-gpu
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: ghcr.io/codekow/xmrig:latest-cuda
+        value: ghcr.io/codekow/xmrig:6.21.1-cuda
       - op: replace
         path: /spec/template/spec/containers/0/env/4
-        value: 
+        value:
           name: EXTRA_ARGS
           value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-color --no-cpu'
       - op: replace

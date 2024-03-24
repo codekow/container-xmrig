@@ -27,7 +27,7 @@ patches:
         value: burn-in-hugepages-2m
       - op: replace
         path: /spec/template/spec/containers/0/env/3
-        value: 
+        value:
           name: POOL_PASS
           value: k8s-proxy
       - op: replace
@@ -41,4 +41,3 @@ patches:
             memory: 128Mi
           requests:
             hugepages-2Mi: 2400Mi
-
