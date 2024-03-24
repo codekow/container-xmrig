@@ -1,9 +1,6 @@
 extends: default
 
 rules:
-  comments:
-    ignore: |
-      openshift/cronjob/*
   document-start: disable
   line-length: disable
   indentation:
