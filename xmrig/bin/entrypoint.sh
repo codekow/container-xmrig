@@ -21,12 +21,12 @@ DEFAULT_EXTRA_ARGS=''
 
 # print access token
 [ -z "${ACCESS_TOKEN}" ] && \
-  echo "
-    ================================================
-    API TOKEN: ${DEFAULT_ACCESS_TOKEN}
+  echo -e "
+    =================================================
+    API TOKEN: \033[32m${DEFAULT_ACCESS_TOKEN}\033[0m
 
-    This will change when the container restarts!
-    ================================================
+    \033[31m⚠ This will change when the container restarts ⚠\033[0m
+    =================================================
   "
 
 # copy default config
