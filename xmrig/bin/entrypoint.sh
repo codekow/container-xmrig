@@ -41,6 +41,10 @@ DEFAULT_EXTRA_ARGS=''
 [ -d /dev/kfd ] && \
   sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
 
+# disable cpu
+grep -q --no-cpu < "${EXTRA_ARGS}" && \ 
+  sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
+
 start_miner(){
 
 xmrig \
@@ -65,10 +69,6 @@ start_meta_miner(){
 
 sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
 sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
-
-# disable cpu
-grep -q --no-cpu < "${EXTRA_ARGS}" && \ 
-  sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 
 /usr/local/bin/mm.js \
   -m="xmrig --config=config.json" \
