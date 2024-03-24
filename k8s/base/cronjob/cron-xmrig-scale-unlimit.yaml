@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: xmrig-scale-unlimit
+spec:
+  schedule: "45 23 * * 1-5"
+  successfulJobsHistoryLimit: 3  # Remove after successful completion
+  failedJobsHistoryLimit: 1  # Retain failed so that we see it
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: xmrig-scale
+          containers:
+          - name: xmrig-scale
+            image: image-registry.openshift-image-registry.svc:5000/openshift/cli
+            env:
+              - name: DEPLOYMENT_NAME
+                value: ds/xmrig
+            command:
+              - bash
+              - -c
+              - |
+                # remove cpu limit
+                oc patch "${DEPLOYMENT_NAME}" --type json -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/resources/limits/cpu"}]'

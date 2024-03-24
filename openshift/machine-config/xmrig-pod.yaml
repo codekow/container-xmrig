@@ -4,7 +4,7 @@ metadata:
   labels:
     app: burn-in
   name: burn-in
-  # namespace: default
+  namespace: default
 spec:
   containers:
   - image: ghcr.io/codekow/xmrig:latest
@@ -15,9 +15,11 @@ spec:
       requests:
         memory: 2400Mi
     env:
+      - name: POOL_URL
+        value: proxy.burn-in.svc.cluster.local:3333
       - name: EXTRA_ARGS
-        value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100'
+        value: '--cpu-priority=0'
     securityContext:
-      privileged: false
+      privileged: true
   restartPolicy: Always
   hostNetwork: true
