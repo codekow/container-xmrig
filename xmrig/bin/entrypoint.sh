@@ -21,7 +21,7 @@ start_miner(){
   sed -i '/"cuda":/{n;s/"enabled":.*/"enabled": true,/}' config.json
 
 # enable opencl
-[ -d /etc/OpenCL/ ] && \
+[ -d /dev/kfd ] && \
   sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
 
 xmrig \
