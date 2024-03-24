@@ -71,7 +71,7 @@ sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' co
   -u="${POOL_USER:-$DEFAULT_POOL_USER}" \
   -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
   --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
-  -w=120
+  --watchdog=120
 
 }
 
