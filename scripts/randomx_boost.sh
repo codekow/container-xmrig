@@ -1,5 +1,5 @@
-# See https://github.com/xmrig/xmrig/blob/dev/scripts/randomx_boost.sh
 #!/bin/sh -e
+# See https://github.com/xmrig/xmrig/blob/dev/scripts/randomx_boost.sh
 
 MSR_FILE=/sys/module/msr/parameters/allow_writes
 which wrmsr || exit 1
