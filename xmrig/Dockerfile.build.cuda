@@ -65,7 +65,8 @@ LABEL \
 ENV XMRIG_VERSION="6.21.1"
 
 RUN apt update && \
-    apt -y install curl nodejs libnvidia-compute-535 libnvrtc11.2 && \
+    apt -y install --no-install-recommends curl wget ca-certificates nodejs && \
+    apt -y install libnvidia-compute-535 libnvrtc11.2 && \
     rm -rf /var/lib/apt/lists/*
     # apt -y install nvidia-opencl-dev && \
 
