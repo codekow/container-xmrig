@@ -14,29 +14,31 @@ patches:
         path: /metadata/labels
       - op: replace
         path: /metadata/name
-        value: burn-in-gpu-remove
+        value: burn-in-hugepages-2m-remove
       - op: replace
         path: /spec/selector/matchLabels/app
-        value: burn-in-gpu
+        value: burn-in-hugepages-2m
       - op: replace
         path: /spec/template/metadata/labels/app
-        value: burn-in-gpu
+        value: burn-in-hugepages-2m
       - op: replace
         path: /spec/template/spec/containers/0/name
-        value: burn-in-gpu
+        value: burn-in-hugepages-2m
       - op: replace
-        path: /spec/template/spec/containers/0/image
-        value: ghcr.io/codekow/xmrig:latest-cuda
-      - op: replace
-        path: /spec/template/spec/containers/0/env/4
+        path: /spec/template/spec/containers/0/env/3
         value: 
-          name: EXTRA_ARGS
-          value: '--asm=none --no-huge-pages --cpu-no-yield --max-cpu-usage=100 --no-color --no-cpu'
+          name: POOL_PASS
+          value: hugepages-2m
       - op: replace
-        path: /spec/template/spec/containers/0/resources/limits
+        path: /spec/template/spec/containers/0/resources
         value:
-          nvidia.com/gpu: 1
+          limits:
+            hugepages-2Mi: 2400Mi
+            memory: 64Mi
+          requests:
+            hugepages-2Mi: 2400Mi
       - op: replace
         path: /spec/template/spec/nodeSelector
         value:
-          nvidia.com/gpu.deploy.device-plugin: 'true'
+          kubernetes.io/os: linux
+          node-role.kubernetes.io/worker-hp-2m: ''

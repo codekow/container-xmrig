@@ -19,4 +19,3 @@ spec:
     securityContext:
       privileged: false
   restartPolicy: Never
-

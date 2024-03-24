@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: xmrig-ds-scale-up
+  name: xmrig-scale-limit
 spec:
-  schedule: "45 23 * * 1-5"
+  schedule: "0 12 * * 1-5"
   successfulJobsHistoryLimit: 3 # Remove after successful completion
   failedJobsHistoryLimit: 1 # Retain failed so that we see it
   concurrencyPolicy: Forbid
@@ -12,16 +12,18 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
-          serviceAccountName: xmrig-ds-scale
+          serviceAccountName: xmrig-scale
           containers:
-          - name: xmrig-ds-scale-up-job
+          - name: xmrig-scale
             image: image-registry.openshift-image-registry.svc:5000/openshift/cli
             env:
-              - name: DAEMON_SET_NAME
-                value: xmrig-hugepages-2m
+              - name: DEPLOYMENT_NAME
+                value: ds/xmrig
+              - name: CPU_LIMIT
+                value: '5'
             command:
               - bash
               - -c
               - |
-                # remove cpu limit
-                oc patch ds "${DAEMON_SET_NAME}" --type json -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/resources/limits/cpu"}]'
+                # set cpu limit
+                oc set resources "${DEPLOYMENT_NAME}" --limits="cpu=${CPU_LIMIT}"
