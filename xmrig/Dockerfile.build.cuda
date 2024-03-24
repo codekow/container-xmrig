@@ -64,12 +64,18 @@ LABEL \
 ENV XMRIG_VERSION="6.21.1"
 
 RUN apt update && \
-    apt -y install libnvidia-compute-535 libnvrtc11.2 && \
+    apt -y install curl nodejs libnvidia-compute-535 libnvrtc11.2 && \
     rm -rf /var/lib/apt/lists/*
     # apt -y install nvidia-opencl-dev && \
 
 COPY --from=build --chown=root /root/xmrig/build/xmrig /usr/local/bin
 COPY --from=build-cuda-plugin /root/xmrig-cuda/build/libxmrig-cuda.so /usr/local/bin/
+
+# setup: meta-miner
+ARG MM_URL="https://raw.githubusercontent.com/MoneroOcean/meta-miner/master/mm.js"
+
+RUN curl -svL "${MM_URL}" -o /usr/local/bin/mm.js && \
+    chmod +x /usr/local/bin/mm.js
 
 # setup: entrypoint and other scripts over
 COPY bin /usr/local/bin
