@@ -11,7 +11,7 @@ RUN apt install -y git wget curl build-essential cmake automake libtool autoconf
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 
 
-ARG CUDA_PLUGIN_VERSION="6.21.1"
+ARG CUDA_PLUGIN_VERSION="6.22.0"
 
 WORKDIR /root
 RUN curl -sL https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v${CUDA_PLUGIN_VERSION}.tar.gz | tar zxf - && \
@@ -23,7 +23,7 @@ RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKI
 
 FROM docker.io/ubuntu:22.04 AS build
 
-ARG XMRIG_VERSION="6.21.1"
+ARG XMRIG_VERSION="6.22.0"
 
 # hadolint ignore=DL3018
 RUN apt update && \
@@ -61,7 +61,7 @@ LABEL \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.21.1"
+ENV XMRIG_VERSION="6.22.0"
 
 RUN apt update && \
     apt -y install --no-install-recommends curl wget ca-certificates nodejs && \
