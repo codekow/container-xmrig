@@ -26,7 +26,7 @@ patches:
         value: burn-in-cuda
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: ghcr.io/codekow/xmrig:6.22.0-cuda
+        value: ghcr.io/codekow/xmrig:6.22.2-cuda
       - op: replace
         path: /spec/template/spec/containers/0/env/3
         value:
