@@ -11,7 +11,7 @@ RUN apt install -y git wget curl build-essential cmake automake libtool autoconf
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 
 
-ARG CUDA_PLUGIN_VERSION="6.22.2"
+ARG CUDA_PLUGIN_VERSION="6.22.0"
 
 WORKDIR /root
 RUN curl -sL https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v${CUDA_PLUGIN_VERSION}.tar.gz | tar zxf - && \
