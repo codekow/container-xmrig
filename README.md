@@ -1,5 +1,9 @@
 # XMRig Container - Mine / Benchmark in Docker / Podman / Kubernetes
 
+[![Publish xmrig](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig.yml)
+[![Publish xmrig-proxy](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-proxy.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-proxy.yml)
+[![Publish xmrig-cuda](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-cuda.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-cuda.yml)
+
 The purpose of this repo is to have a way to test limits and burn in hardware. 
 
 Have you configured your security policies and resource limits effectively to curb user abuse?
