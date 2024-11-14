@@ -11,7 +11,7 @@ RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
 ENV XMRIG_VERSION="6.22.2"
-ARG XMRIG_HASH="aa866149d6234a1f00e344a702b719a0d6b4c40d3905d861ed536df1933a1d25"
+ARG XMRIG_HASH="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 ARG XMRIG_URL="https://github.com/MoneroOcean/xmrig/releases/download/v${XMRIG_VERSION}-mo1/xmrig-v${XMRIG_VERSION}-mo1-lin64-compat.tar.gz"
 
 RUN curl -sL "${XMRIG_URL}" -o bin.tgz && \
