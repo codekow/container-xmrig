@@ -1,5 +1,9 @@
 # XMRig Container - Mine / Benchmark in Docker / Podman / Kubernetes
 
+[![Publish xmrig](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig.yml)
+[![Publish xmrig-proxy](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-proxy.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-proxy.yml)
+[![Publish xmrig-cuda](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-cuda.yml/badge.svg)](https://github.com/codekow/container-xmrig/actions/workflows/publish-xmrig-cuda.yml)
+
 The purpose of this repo is to have a way to test limits and burn in hardware. 
 
 Have you configured your security policies and resource limits effectively to curb user abuse?
@@ -20,17 +24,17 @@ Running the container(s) without parameters ~~helps contribute $$~~ [sends metri
 
 ### Usage Docker / Podman
 
-```
+```sh
 docker run -it --rm ghcr.io/codekow/xmrig
 ```
 
-```
+```sh
 podman run -it --rm ghcr.io/codekow/xmrig
 ```
 
 Run meta miner
 
-```
+```sh
 # see xmrig/bin/entrypoint.sh for more info.
 # this might get documented... :)
 podman run -it --rm ghcr.io/codekow/xmrig start_meta_miner
@@ -44,7 +48,7 @@ For those of you who want to ~~get rich~~ [lose money](https://whattomine.com/co
 
 NOTE: This container does not run as `root` by default
 
-```
+```sh
 export POOL_URL="Pool URL"
 export POOL_USER="Public Monero address"
 export POOL_PASS="Miner ID - optional for most pools"
@@ -67,13 +71,14 @@ podman run \
 Running processes as `root` comes with risks and rewards (like most things).
 
 If you are trying to:
+
 - Improve hash rates (aka: performance) modifying [Model Specific Register](https://xmrig.com/docs/miner/randomx-optimization-guide/msr) (MSR)
 - Like [taking risks](https://xkcd.com/1252)
 - Have a history of making [bad choices](https://en.wikipedia.org/wiki/Hot_Pockets)
 
 Then the following is for you.
 
-```
+```sh
 sudo podman run \
   -it --rm \
   --privileged \
@@ -94,13 +99,13 @@ XMR:
 
 For those with time to look at the code...
 
-```
+```sh
 # ubuntu
 apt install podman
 apt install curl git make aspell python3.10-venv
 ```
 
-```
+```sh
 # run before submitting a PR
 make lint
 make build

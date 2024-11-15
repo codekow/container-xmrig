@@ -23,7 +23,7 @@ RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKI
 
 FROM docker.io/ubuntu:22.04 AS build
 
-ARG XMRIG_VERSION="6.22.0"
+ARG XMRIG_VERSION="6.22.2"
 
 # hadolint ignore=DL3018
 RUN apt update && \
@@ -61,7 +61,7 @@ LABEL \
       org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
 
 # setup: xmrig
-ENV XMRIG_VERSION="6.22.0"
+ENV XMRIG_VERSION="6.22.2"
 
 RUN apt update && \
     apt -y install --no-install-recommends curl wget ca-certificates nodejs && \

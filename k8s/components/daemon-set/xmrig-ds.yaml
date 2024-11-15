@@ -44,10 +44,10 @@ spec:
           image: ghcr.io/codekow/xmrig:latest
           resources:
             limits:
-          #     cpu: '5'
-          #     memory: 2400Mi
-          #   requests:
-          #     memory: 2400Mi
+            #   cpu: '5'
+            #   memory: 2400Mi
+            # requests:
+            #   memory: 2400Mi
       volumes:
         - name: empty
           emptyDir: {}

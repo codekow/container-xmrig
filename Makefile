@@ -17,7 +17,7 @@ SHELL=/bin/bash
 build: lint pre-build xmrig-build xmrig-build-cuda xmrig-proxy-build post-build
 
 
-lint: venv lint-yaml lint-spellcheck
+lint: venv lint-yaml lint-spellcheck lint-kustomize
 
 
 pre-build:
@@ -48,6 +48,9 @@ push:
 
 lint-yaml:
 	 $(VENV)/yamllint -c .yamllint .
+
+lint-kustomize:
+	scripts/validate_kustomize.sh
 
 lint-spellcheck:
 	$(VENV)/pyspelling -c .spellcheck.yaml

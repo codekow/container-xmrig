@@ -1,49 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: xmrig
-    app.kubernetes.io/component: xmrig
-    app.kubernetes.io/instance: xmrig
-    app.kubernetes.io/name: xmrig
-    app.kubernetes.io/part-of: xmrig
-  name: xmrig
+  name: xmrig-proxy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xmrig
+      app: xmrig-proxy
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: xmrig
+        app: xmrig-proxy
     spec:
       containers:
-      - image: ghcr.io/codekow/xmrig:latest
-        imagePullPolicy: IfNotPresent
-        name: xmrig
-        env:
+      - env:
         - name: POOL_URL
           value: gulf.moneroocean.stream:10128
         - name: POOL_USER
           value: 4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26
         - name: POOL_PASS
-          value: k8s
+          value: k8s-proxy
         - name: EXTRA_ARGS
-          value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
-        resources:
-          limits:
-            cpu: '1'
-            memory: 2400Mi
-          requests:
-            cpu: '1'
+          value: ""
+        image: ghcr.io/codekow/xmrig-proxy:latest
+        imagePullPolicy: IfNotPresent
+        name: xmrig-proxy
         ports:
         - containerPort: 3333
           protocol: TCP
         - containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 500m
+            memory: 128Mi
         volumeMounts:
         - mountPath: /home/miner
           name: empty

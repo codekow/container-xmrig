@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/component: xmrig
+    app.kubernetes.io/instance: xmrig
+    app.kubernetes.io/name: xmrig
+    app.kubernetes.io/part-of: xmrig
+
+components:
+  - ../../components/deployment
+
+patches:
+  - target:
+      group: apps
+      kind: Deployment
+      name: xmrig
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0
+        value:
+            name: POOL_URL
+            value: xmrig-proxy:3333

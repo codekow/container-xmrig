@@ -3,4 +3,4 @@ apiVersion: v1
 metadata:
   name: burn-in
   annotations:
-    openshift.io/display-name: Hardware Burn-In
+    openshift.io/display-name: Stress Cluster Workload
