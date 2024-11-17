@@ -23,8 +23,6 @@ env:
   GHCR_REGISTRY: ghcr.io
   GHCR_USER: ${{ github.repository_owner }}
   GHCR_IMAGE: ${GHCR_REGISTRY}/${GHCR_USER}/${IMAGE_NAME}
-  # DOCKERHUB_REGISTRY=docker.io
-  # DOCKERHUB_USER: ${{ github.repository_owner }}
 
 
 jobs:
