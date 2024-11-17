@@ -1,37 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - ../../base/deployment
+components:
+  - ../../components/proxy
+  - ../../components/proxy-miner
 
-patches:
-  - target:
-      group: apps
-      kind: Deployment
-      name: xmrig
-    patch: |-
-      - op: remove
-        path: /metadata/labels
-      - op: replace
-        path: /metadata/name
-        value: burn-in-hugepages-2m-remove
-      - op: replace
-        path: /spec/selector/matchLabels/app
-        value: burn-in-hugepages-2m
-      - op: replace
-        path: /spec/template/metadata/labels/app
-        value: burn-in-hugepages-2m
-      - op: replace
-        path: /spec/template/spec/containers/0/name
-        value: burn-in-hugepages-2m
-      - op: replace
-        path: /spec/template/spec/containers/0/env
-        value:
-          - name: POOL_URL
-            value: xmrig-proxy:3333
-          - name: POOL_USER
-            value: $(HOSTNAME)
-          - name: POOL_PASS
-            value: x
-          - name: EXTRA_ARGS
-            value: '--no-huge-pages --cpu-no-yield --max-cpu-usage=100 -t=1 --no-color'
+resources:
+  - ../../base
