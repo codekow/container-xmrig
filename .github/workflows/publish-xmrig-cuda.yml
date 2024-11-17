@@ -14,12 +14,12 @@ on:  # yamllint disable-line rule:truthy
     tags: ["v*.*.*"]
     paths:
     - xmrig/**
-    - .github/workflows/**
+    # - .github/workflows/**
   pull_request:
     branches: ["main"]
     paths:
     - xmrig/**
-    - .github/workflows/**
+    # - .github/workflows/**
 
 env:
   IMAGE_NAME: xmrig
