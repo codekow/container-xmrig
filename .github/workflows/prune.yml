@@ -17,6 +17,6 @@ jobs:
         with:
           account: user
           token: ${{ secrets.GITHUB_TOKEN }}
-          image-names: "*"  # all packages owned by the account
+          image-names: "xmrig xmrig-proxy"  # all packages owned by the account
           tag-selection: untagged
           cut-off: 1h
