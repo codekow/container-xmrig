@@ -6,8 +6,8 @@ name: Publish xmrig-proxy
 # documentation.
 
 on:  # yamllint disable-line rule:truthy
-  schedule:
-    - cron: '5 4 * * 6'
+  # schedule:
+  #   - cron: '5 4 * * 6'
   push:
     branches: ["main"]
     # Publish semver tags as releases.
