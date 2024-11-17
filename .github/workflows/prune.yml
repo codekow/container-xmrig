@@ -2,6 +2,8 @@ name: Prune Packages
 on:
   schedule:
     - cron: "0 0 * * *"  # every day at midnight, utc
+  push:
+    branches: ["main"]
 
 jobs:
   delete-package-versions:
