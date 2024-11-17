@@ -12,10 +12,12 @@ on:  # yamllint disable-line rule:truthy
     branches: ["main"]
     # Publish semver tags as releases.
     tags: ["v*.*.*"]
-    paths: ["xmrig-proxy/**"]
+    paths:
+      - xmrig-proxy/**
   pull_request:
     branches: ["main"]
-    paths: ["xmrig-proxy/**"]
+    paths:
+      - xmrig-proxy/**
 
 env:
   IMAGE_NAME: xmrig-proxy
