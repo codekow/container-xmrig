@@ -84,6 +84,7 @@ sudo podman run \
   --privileged \
   -u root \
   -v /lib/modules:/lib/modules:ro \
+  -e POOL_PASS=$(hostname) \
   ghcr.io/codekow/xmrig
 ```
 

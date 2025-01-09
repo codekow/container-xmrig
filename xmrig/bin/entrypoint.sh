@@ -46,15 +46,15 @@ echo "${EXTRA_ARGS}" | grep -q no-cpu && \
   sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 
 init_miner_benchmark(){
-  TIMEOUT=197
+  TIMEOUT=200
 
   xmrig \
-  --config=config.json \
-  --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
-  -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
-  -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
-  -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" &
-  pid=$!
+    --config=config.json \
+    --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
+    -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
+    -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
+    -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" &
+    pid=$!
 
   (sleep "${TIMEOUT}"; kill $pid) &
   
@@ -64,38 +64,38 @@ init_miner_benchmark(){
 
 start_miner(){
 
-xmrig \
-  --config=config.json \
-  --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
-  -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
-  -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
-  -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" \
-  --http-enabled \
-  --http-port=8080 \
-  --http-host=0.0.0.0 \
-  --http-access-token="${ACCESS_TOKEN:-$DEFAULT_ACCESS_TOKEN}" \
-  --nicehash \
-  --keepalive \
-  ${EXTRA_ARGS:-$DEFAULT_EXTRA_ARGS}
+  xmrig \
+    --config=config.json \
+    --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
+    -o "${POOL_URL:-$DEFAULT_POOL_URL}" \
+    -u "${POOL_USER:-$DEFAULT_POOL_USER}" \
+    -p "${POOL_PASS:-$DEFAULT_POOL_PASS}" \
+    --http-enabled \
+    --http-port=8080 \
+    --http-host=0.0.0.0 \
+    --http-access-token="${ACCESS_TOKEN:-$DEFAULT_ACCESS_TOKEN}" \
+    --nicehash \
+    --keepalive \
+    ${EXTRA_ARGS:-$DEFAULT_EXTRA_ARGS}
 }
 
 start_meta_miner(){
 
-init_miner_benchmark
+  init_miner_benchmark
 
-# copy mm.config (config map)
-[ -e /config/mm.json ] && cat /config/mm.json > mm.json
+  # copy mm.config (config map)
+  [ -e /config/mm.json ] && cat /config/mm.json > mm.json
 
-sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
-sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
+  sed -i 's/"url": *"[^"]*",/"url": "localhost:3333",/' config.json
+  sed -i 's/"user": *"[^"]*",/"user": "'"${POOL_USER:-$DEFAULT_POOL_USER}"'",/' config.json
 
-/usr/local/bin/mm.js \
-  -m="xmrig --config=config.json" \
-  -u="${POOL_USER:-$DEFAULT_POOL_USER}" \
-  -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
-  --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
-  --watchdog=240 \
-  --hashrate_watchdog=80
+  /usr/local/bin/mm.js \
+    -m="xmrig --config=config.json" \
+    -u="${POOL_USER:-$DEFAULT_POOL_USER}" \
+    -p="${POOL_URL:-$DEFAULT_POOL_URL}" \
+    --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
+    --watchdog=240 \
+    --hashrate_watchdog=80
 
 }
 
