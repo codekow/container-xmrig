@@ -1,49 +1,37 @@
 #!/bin/sh
 set -e
 
-create_access_token() {
+HOME=/home/miner
+
+check_cpu(){
+  if [ -f /sys/fs/cgroup/cpu/cpu.cfs_quota_us ]; then
+    CPU_COUNT=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
+  else
+    CPU_COUNT=$(cat /sys/fs/cgroup/cpu.max | awk '{print $1}')
+  fi
+  
+  CPU_COUNT=$(($CPU_COUNT / 100000))
+  echo "CPU: $CPU_COUNT"
+}
+
+check_memory(){
+  if [ -f /sys/fs/cgroup/memory/memory.limit_in_bytes ]; then
+    MEMORY_SIZE=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
+  else
+    MEMORY_SIZE=$(cat /sys/fs/cgroup/memory.max)
+  fi
+  
+  MEMORY_SIZE=$(($MEMORY_SIZE / 1024 / 1024))
+  echo "MEM: $MEMORY_SIZE Mi"
+}
+
+create_access_token(){
   if [ -x "$(command -v uuidgen)" ]; then
     uuidgen
   else
     cat /proc/sys/kernel/random/uuid
   fi
 }
-
-HOME=/home/miner
-
-DEFAULT_DONATE_LEVEL='1'
-DEFAULT_POOL_URL='gulf.moneroocean.stream:10128'
-DEFAULT_POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26'
-DEFAULT_POOL_PASS='space-heater'
-#DEFAULT_EXTRA_ARGS='--tls --cpu-no-yield'
-DEFAULT_ACCESS_TOKEN=$(create_access_token)
-DEFAULT_EXTRA_ARGS=''
-
-# print access token
-[ -z "${ACCESS_TOKEN}" ] && \
-  printf "
-    =================================================
-    API TOKEN: \033[32m${DEFAULT_ACCESS_TOKEN}\033[0m
-
-    \033[31m⚠ This will change when the container restarts ⚠\033[0m
-    =================================================
-  "
-
-# copy default config
-[ -e config.json ] || \
-  cat /usr/local/bin/config.json > config.json
-
-# enable cuda
-[ -e /usr/local/bin/libxmrig-cuda.so ] && \
-  sed -i '/"cuda":/{n;s/"enabled":.*/"enabled": true,/}' config.json
-
-# enable opencl
-[ -d /dev/kfd ] && \
-  sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
-
-# disable cpu
-echo "${EXTRA_ARGS}" | grep -q no-cpu && \
-  sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 
 init_miner_benchmark(){
   TIMEOUT=200
@@ -64,6 +52,8 @@ init_miner_benchmark(){
 
 start_miner(){
 
+  main
+
   xmrig \
     --config=config.json \
     --donate-level "${DONATE_LEVEL:-$DEFAULT_DONATE_LEVEL}" \
@@ -81,7 +71,7 @@ start_miner(){
 
 start_meta_miner(){
 
-  init_miner_benchmark
+  main
 
   # copy mm.config (config map)
   [ -e /config/mm.json ] && cat /config/mm.json > mm.json
@@ -96,8 +86,52 @@ start_meta_miner(){
     --pass="${POOL_PASS:-$DEFAULT_POOL_PASS}" \
     --watchdog=240 \
     --hashrate_watchdog=80
-
 }
+
+main(){
+
+  check_cpu
+  check_memory
+
+  # print access token
+  [ -z "${ACCESS_TOKEN}" ] && \
+    echo "
+      =================================================
+      API TOKEN: \033[32m${DEFAULT_ACCESS_TOKEN}\033[0m
+
+      \033[31m⚠ This will change when the container restarts ⚠\033[0m
+      =================================================
+    "
+
+  # copy config (config map)
+  [ -e /config/config.json ] && \
+    cat /config/config.json > config.json
+
+  # copy default config
+  [ -e config.json ] || \
+    cat /usr/local/bin/config.json > config.json
+
+  # enable cuda
+  [ -e /usr/local/bin/libxmrig-cuda.so ] && \
+    sed -i '/"cuda":/{n;s/"enabled":.*/"enabled": true,/}' config.json
+
+  # enable opencl
+  [ -d /dev/kfd ] && \
+    sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
+
+  # disable cpu
+  [ -z ${EXTRA_ARGS} ] && return 0
+    echo "${EXTRA_ARGS}" | grep -q no-cpu && \
+    sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
+}
+
+DEFAULT_DONATE_LEVEL='1'
+DEFAULT_POOL_URL='gulf.moneroocean.stream:10128'
+DEFAULT_POOL_USER='4AwPZobe6PsLbfk5ntnv6Wa9DPL3aPd4N2b761EmsMpAQbBaJaAajQGhtBXDL9Mo4G649oAmWzNJU5L3YBS458iw2XkJp26'
+DEFAULT_POOL_PASS='space-heater'
+DEFAULT_ACCESS_TOKEN=$(create_access_token)
+# DEFAULT_EXTRA_ARGS='--tls --cpu-no-yield'
+DEFAULT_EXTRA_ARGS=''
 
 if [ "$1" != "" ]; then
   case "$1" in
