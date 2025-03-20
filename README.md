@@ -88,6 +88,18 @@ sudo podman run \
   ghcr.io/codekow/xmrig
 ```
 
+```sh
+sudo podman run \
+  -it --rm \
+  --privileged \
+  -u root \
+  -v /lib/modules:/lib/modules:ro \
+  -e POOL_PASS=$(hostname) \
+   --device nvidia.com/gpu=all \
+   --security-opt=label=disable \
+  ghcr.io/codekow/xmrig:latest-cuda
+  ```
+
 NOTE: mounting `/lib/modules` read-only inside the container allows compatibility with more systems, but is usually not required.
 
 ## Development
