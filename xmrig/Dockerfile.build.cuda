@@ -1,6 +1,8 @@
+# builder cuda-plugin
 FROM docker.io/ubuntu:22.04 as build-cuda-plugin
 
 ARG CUDA_VERSION="11-4"
+ARG CUDA_PLUGIN_VERSION="6.22.0"
 
 RUN apt update && \
     apt install -y nvidia-cuda-toolkit
@@ -10,9 +12,6 @@ RUN apt install -y git wget curl build-essential cmake automake libtool autoconf
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100 && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 
-
-ARG CUDA_PLUGIN_VERSION="6.22.0"
-
 WORKDIR /root
 RUN curl -sL https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v${CUDA_PLUGIN_VERSION}.tar.gz | tar zxf - && \
     mv xmrig-cuda-${CUDA_PLUGIN_VERSION} xmrig-cuda
@@ -21,6 +20,7 @@ WORKDIR /root/xmrig-cuda/build
 RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/lib/x86_64-linux-gnu -DCUDA_ARCH="75;80;86;87" && \
     make -j $(nproc)
 
+# builder
 FROM docker.io/ubuntu:22.04 AS build
 
 ARG XMRIG_VERSION="6.22.2"
@@ -54,15 +54,7 @@ RUN cmake .. \
 # miner
 FROM docker.io/ubuntu:22.04 as runtime
 
-### https://github.com/opencontainers/image-spec/blob/main/annotations.md
-LABEL \
-      org.opencontainers.image.description.vendor="xmrig" \
-      org.opencontainers.image.description="A container used to mine XMR using xmrig" \
-      org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
-
 # setup: xmrig
-ENV XMRIG_VERSION="6.22.2"
-
 RUN apt update && \
     apt -y install --no-install-recommends curl wget ca-certificates nodejs && \
     apt -y install libnvidia-compute-535 libnvrtc11.2 && \
@@ -89,3 +81,9 @@ VOLUME /home/miner
 EXPOSE 3333 8080
 
 ENTRYPOINT ["entrypoint.sh"]
+
+### https://github.com/opencontainers/image-spec/blob/main/annotations.md
+LABEL \
+      org.opencontainers.image.description.vendor="xmrig" \
+      org.opencontainers.image.description="A container used to mine XMR using xmrig" \
+      org.opencontainers.image.source="https://github.com/codekow/container-xmrig"
