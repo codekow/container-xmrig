@@ -10,7 +10,7 @@ check_cpu(){
     CPU_COUNT=$(cat /sys/fs/cgroup/cpu.max | awk '{print $1}')
   fi
   
-  CPU_COUNT=$(($CPU_COUNT / 100000))
+  CPU_COUNT=$((CPU_COUNT / 100000))
   echo "CPU: $CPU_COUNT"
 }
 
@@ -21,7 +21,7 @@ check_memory(){
     MEMORY_SIZE=$(cat /sys/fs/cgroup/memory.max)
   fi
   
-  MEMORY_SIZE=$(($MEMORY_SIZE / 1024 / 1024))
+  MEMORY_SIZE=$((MEMORY_SIZE / 1024 / 1024))
   echo "MEM: $MEMORY_SIZE Mi"
 }
 
@@ -102,6 +102,10 @@ main(){
       \033[31m⚠ This will change when the container restarts ⚠\033[0m
       =================================================
     "
+
+  # check if current dir is writeable
+  [ -w "${PWD}" ] || \
+    cd /tmp
 
   # copy config (config map)
   [ -e /config/config.json ] && \

@@ -2,7 +2,7 @@
 FROM docker.io/ubuntu:22.04 as build-cuda-plugin
 
 ARG CUDA_VERSION="11-4"
-ARG CUDA_PLUGIN_VERSION="6.22.0"
+ARG CUDA_PLUGIN_VERSION="6.22.1"
 
 RUN apt update && \
     apt install -y nvidia-cuda-toolkit
@@ -80,7 +80,7 @@ VOLUME /home/miner
 
 EXPOSE 3333 8080
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \

@@ -4,8 +4,8 @@ FROM docker.io/library/alpine:3
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ARG XMRIG_VERSION="6.22.2"
-ARG XMRIG_HASH="a110ea61275205de7953070e0d143787e45604fb8fbed1d4058d486b2b57c7e4"
+ARG XMRIG_VERSION="6.24.0"
+ARG XMRIG_HASH="56b6cb39021663225d396646c6768692076eaeb7b8a955e2b732ade4b875e405"
 ARG XMRIG_URL="https://github.com/MoneroOcean/xmrig/releases/download/v${XMRIG_VERSION}-mo1/xmrig-v${XMRIG_VERSION}-mo1-lin64-compat.tar.gz"
 
 RUN curl -sL "${XMRIG_URL}" -o bin.tgz && \
@@ -31,7 +31,7 @@ VOLUME /home/miner
 
 EXPOSE 3333 8080
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \

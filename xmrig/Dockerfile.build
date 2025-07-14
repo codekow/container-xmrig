@@ -1,7 +1,7 @@
 # builder
 FROM docker.io/library/alpine:3 AS build
 
-ARG XMRIG_VERSION='6.22.2'
+ARG XMRIG_VERSION='6.24.0'
 
 # hadolint ignore=DL3018
 RUN apk --no-cache add bash curl git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
@@ -54,7 +54,7 @@ VOLUME /home/miner
 
 EXPOSE 3333 8080
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 ### https://github.com/opencontainers/image-spec/blob/main/annotations.md
 LABEL \
