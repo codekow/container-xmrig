@@ -11,7 +11,7 @@ check_cpu(){
   fi
 
   CPU_COUNT="NA"
-  [ "${RESULT}" -gt 100 ] && CPU_COUNT=$((RESULT / 100000))
+  [ "${RESULT}" = "max" ] || CPU_COUNT=$((RESULT / 100000))
   echo "CPU: $CPU_COUNT"
 }
 
@@ -23,7 +23,7 @@ check_memory(){
   fi
 
   MEMORY_SIZE="NA"
-  [ "${MEMORY_SIZE}" -gt 100 ] && MEMORY_SIZE=$((RESULT / 1024 / 1024))
+  [ "${MEMORY_SIZE}" = "max" ] || MEMORY_SIZE=$((RESULT / 1024 / 1024))
   echo "MEM: $MEMORY_SIZE Mi"
 }
 
