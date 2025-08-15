@@ -23,7 +23,7 @@ check_memory(){
   fi
 
   MEMORY_SIZE="NA"
-  [ "${MEMORY_SIZE}" = "max" ] || MEMORY_SIZE=$((RESULT / 1024 / 1024))
+  [ "${RESULT}" = "max" ] || MEMORY_SIZE=$((RESULT / 1024 / 1024))
   echo "MEM: $MEMORY_SIZE Mi"
 }
 
