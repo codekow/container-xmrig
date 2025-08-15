@@ -1,27 +1,29 @@
 #!/bin/sh
-set -e
+# set -e
 
 HOME=/home/miner
 
 check_cpu(){
   if [ -f /sys/fs/cgroup/cpu/cpu.cfs_quota_us ]; then
-    CPU_COUNT=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
+    RESULT=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
   else
-    CPU_COUNT=$(cat /sys/fs/cgroup/cpu.max | awk '{print $1}')
+    RESULT=$(cat /sys/fs/cgroup/cpu.max | awk '{print $1}')
   fi
-  
-  CPU_COUNT=$((CPU_COUNT / 100000))
+
+  CPU_COUNT="NA"
+  [ "${RESULT}" > 100 ] && CPU_COUNT=$((RESULT / 100000))
   echo "CPU: $CPU_COUNT"
 }
 
 check_memory(){
   if [ -f /sys/fs/cgroup/memory/memory.limit_in_bytes ]; then
-    MEMORY_SIZE=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
+    RESULT=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
   else
-    MEMORY_SIZE=$(cat /sys/fs/cgroup/memory.max)
+    RESULT=$(cat /sys/fs/cgroup/memory.max)
   fi
-  
-  MEMORY_SIZE=$((MEMORY_SIZE / 1024 / 1024))
+
+  MEMORY_SIZE="NA"
+  [ "${MEMORY_SIZE}" > 100 ] && MEMORY_SIZE=$((RESULT / 1024 / 1024))
   echo "MEM: $MEMORY_SIZE Mi"
 }
 
@@ -124,7 +126,7 @@ main(){
     sed -i '/"opencl":/{n;s/"enabled":.*/"enabled": true,/}' config.json
 
   # disable cpu
-  [ -z ${EXTRA_ARGS} ] && return 0
+  [ -z "${EXTRA_ARGS}" ] && return 0
     echo "${EXTRA_ARGS}" | grep -q no-cpu && \
     sed -i '/"cpu":/{n;s/"enabled":.*/"enabled": false,/}' config.json
 }
