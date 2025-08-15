@@ -7,11 +7,11 @@ check_cpu(){
   if [ -f /sys/fs/cgroup/cpu/cpu.cfs_quota_us ]; then
     RESULT=$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us)
   else
-    RESULT=$(cat /sys/fs/cgroup/cpu.max | awk '{print $1}')
+    RESULT=$(awk '{print $1}' < /sys/fs/cgroup/cpu.max)
   fi
 
   CPU_COUNT="NA"
-  [ "${RESULT}" > 100 ] && CPU_COUNT=$((RESULT / 100000))
+  [ "${RESULT}" -gt 100 ] && CPU_COUNT=$((RESULT / 100000))
   echo "CPU: $CPU_COUNT"
 }
 
@@ -23,7 +23,7 @@ check_memory(){
   fi
 
   MEMORY_SIZE="NA"
-  [ "${MEMORY_SIZE}" > 100 ] && MEMORY_SIZE=$((RESULT / 1024 / 1024))
+  [ "${MEMORY_SIZE}" -gt 100 ] && MEMORY_SIZE=$((RESULT / 1024 / 1024))
   echo "MEM: $MEMORY_SIZE Mi"
 }
 
@@ -107,7 +107,7 @@ main(){
 
   # check if current dir is writeable
   [ -w "${PWD}" ] || \
-    cd /tmp
+    cd /tmp || return
 
   # copy config (config map)
   [ -e /config/config.json ] && \
