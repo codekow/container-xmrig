@@ -52,7 +52,7 @@ jobs:
       #     echo "latest_minor=$major.$minor.$patch" >> $GITHUB_ENV
 
       - name: Checkout repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.2
 
       - name: Prepare
         id: prep
