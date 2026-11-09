@@ -1,0 +1,22 @@
+# https://docs.podman.io/en/latest/markdown/podman-container.unit.5.html
+[Unit]
+Description=XMRig Proxy Server
+After=network.target
+
+[Service]
+# EnvironmentFile=/etc/default/xmrig-proxy
+
+[Container]
+ContainerName=xmrig-proxy
+Image=ghcr.io/codekow/xmrig-proxy:latest
+
+# User=6666:6666
+PublishPort=3333:3333
+Label=io.containers.autoupdate=registry
+
+[Service]
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
