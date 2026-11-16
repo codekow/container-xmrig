@@ -4,8 +4,8 @@ FROM docker.io/library/alpine:3
 RUN apk add --no-cache curl nodejs
 
 # setup: xmrig
-ARG XMRIG_VERSION="6.24.0"
-ARG XMRIG_HASH="56b6cb39021663225d396646c6768692076eaeb7b8a955e2b732ade4b875e405"
+ARG XMRIG_VERSION="6.26.0"
+ARG XMRIG_HASH="0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
 ARG XMRIG_URL="https://github.com/MoneroOcean/xmrig/releases/download/v${XMRIG_VERSION}-mo1/xmrig-v${XMRIG_VERSION}-mo1-lin64-compat.tar.gz"
 
 RUN curl -sL "${XMRIG_URL}" -o bin.tgz && \
