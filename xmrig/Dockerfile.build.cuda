@@ -1,5 +1,5 @@
 # builder cuda-plugin
-FROM docker.io/ubuntu:22.04 as build-cuda-plugin
+FROM docker.io/ubuntu:25.10 as build-cuda-plugin
 
 ARG CUDA_VERSION="11-4"
 ARG CUDA_PLUGIN_VERSION="6.22.1"
@@ -21,7 +21,7 @@ RUN cmake .. -DCUDA_LIB=/usr/lib/x86_64-linux-gnu/stubs/libcuda.so -DCUDA_TOOLKI
     make -j $(nproc)
 
 # builder
-FROM docker.io/ubuntu:22.04 AS build
+FROM docker.io/ubuntu:25.10 AS build
 
 ARG XMRIG_VERSION="6.22.2"
 
@@ -52,7 +52,7 @@ RUN cmake .. \
     make -j"$(nproc)"
 
 # miner
-FROM docker.io/ubuntu:22.04 as runtime
+FROM docker.io/ubuntu:25.10 as runtime
 
 # setup: xmrig
 RUN apt update && \
